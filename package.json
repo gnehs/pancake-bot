@@ -1,0 +1,37 @@
+{
+  "name": "pancake ",
+  "version": "0.0.0",
+  "description": "Not a pancake",
+  "repository": {
+    "url": "gnehs/pancake ",
+    "type": "git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "dev": "supervisor -x telegraf index.js",
+    "start": "telegraf",
+    "now-start": "telegraf -d ${NOW_URL}",
+    "lint": "eslint .",
+    "test": "npm run lint"
+  },
+  "engines": {
+    "node": ">=8.5.0"
+  },
+  "author": "gnehs <jayuiop@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "node-cron": "^2.0.3",
+    "simple-json-db": "^1.2.2",
+    "telegraf": "^3.34.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "supervisor": "^0.12.0"
+  }
+}
