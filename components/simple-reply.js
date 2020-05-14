@@ -16,6 +16,17 @@ bot.start(async ({
     reply(`這裡是${first_name}！`)
 })
 
+bot.command('removekbd', ({
+    reply,
+    replyWithSticker
+}) => {
+    replyWithSticker('https://data.gnehs.net/stickers/bye.webp')
+    reply(`鍵盤掰掰`, {
+        reply_markup: JSON.stringify({
+            remove_keyboard: true
+        })
+    })
+})
 bot.command('date', ({
     reply
 }) => reply(`Server time: ${Date()}`))
