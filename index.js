@@ -13,7 +13,8 @@ const bahamut = require('./components/bahamut-anime')
 const simpleReply = require('./components/simple-reply')
 const dayoff = require('./components/dayoff')
 const subscribe = require('./components/subscribe')
-bot.use(bahamut, simpleReply, dayoff, subscribe);
+const help = require('./components/help')
+bot.use(bahamut, simpleReply, dayoff, subscribe, help);
 
 
 module.exports = bot
