@@ -13,6 +13,7 @@ bot.help(async ({
 /ping - PONG
 /date - 傳回伺服器的時間
 /dayoff - 台灣行政院人事局的停班課
+/removekbd 移除鍵盤
 *訂閱功能*
 /subscribe <訂閱編號> - 訂閱
 /unsubscribe <訂閱編號> - 取消訂閱
