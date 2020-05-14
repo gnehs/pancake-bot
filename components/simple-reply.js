@@ -1,22 +1,20 @@
 const Composer = require('telegraf/composer')
 const bot = new Composer()
-
-
+const telegram = require('./telegram')
 bot.on('sticker', ({
     message
 }) => console.log(message))
 
-bot.start(({
+bot.start(async ({
     reply,
     replyWithSticker
 }) => {
-    replyWithSticker('CAACAgUAAxkBAAIEk168uuUhTaJOZq7Y852DtbeSGt9rAAIVAAM4OXczIctMvt3--UEZBA')
-    reply('這裡是鬆餅好朋友！')
+    let {
+        first_name
+    } = await telegram.getMe()
+    replyWithSticker('https://data.gnehs.net/stickers/hello.webp')
+    reply(`這裡是${first_name}！`)
 })
-
-bot.help(({
-    replyWithSticker
-}) => replyWithSticker('CAACAgUAAxkBAAIEqF68vBDUGn3vm__LyL1GIGLBxiN6AAIgAAM4OXczo9cKNXYj3Q4ZBA'))
 
 bot.command('date', ({
     reply
@@ -45,11 +43,15 @@ bot.hears("逼比", ({
 
 bot.hears("喵", ({
     replyWithMarkdown
-}) => replyWithMarkdown('`HTTP/3.0 200 OK.`'));
+}) => replyWithMarkdown('`HTTP /3.0 200 OK.`'));
 
 bot.hears("晚安", ({
     reply,
-    message
-}) => reply(`${message.from.first_name}，晚安❤️`));
+    message,
+    replyWithSticker
+}) => {
+    replyWithSticker('https://data.gnehs.net/stickers/good%20night.webp')
+    reply(`${message.from.first_name}，晚安❤️`)
+});
 
 module.exports = bot

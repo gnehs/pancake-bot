@@ -2,7 +2,7 @@ const db = require('./db')
 const Composer = require('telegraf/composer')
 const telegram = require('./telegram')
 const bot = new Composer()
-bot.use(function (ctx, next) {
+bot.use((ctx, next) => {
     /// or other chat types...
     // if( ctx.chat.type !== 'channel' ) return next();
     if (ctx.chat.id > 0) return next();
@@ -42,11 +42,12 @@ function unsubscribe(key, id) {
     delete subscribe_list[id]
     db.set(key, subscribe_list);
 }
-bot.command('subscribe', (ctx) => {
+bot.command('subscribe', ctx => {
     if (isAdmin(ctx)) {
         let args = ctx.state.command.splitArgs
         let chatId = ctx.message.chat.id
         if (args[0] == 'baha') {
+            ctx.replyWithSticker('https://data.gnehs.net/stickers/ohohoh.webp')
             subscribe('subscribe.baha', chatId)
             ctx.replyWithMarkdown('🎉 已訂閱「動畫瘋更新通知」，使用 `/unsubscribe baha` 來取消訂閱。')
         }
@@ -54,11 +55,12 @@ bot.command('subscribe', (ctx) => {
         ctx.reply(`❌ 只有管理員能使用此指令`)
     }
 })
-bot.command('unsubscribe', (ctx) => {
+bot.command('unsubscribe', ctx => {
     if (isAdmin(ctx)) {
         let args = ctx.state.command.splitArgs
         let chatId = ctx.message.chat.id
         if (args[0] == 'baha') {
+            ctx.replyWithSticker('https://data.gnehs.net/stickers/bye.webp')
             unsubscribe('subscribe.baha', chatId)
             ctx.reply(`👋 取消訂閱「動畫瘋更新通知」成功。`)
         }
