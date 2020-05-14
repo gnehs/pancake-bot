@@ -19,7 +19,6 @@ bot.use(function (ctx, next) {
         .then(_ => next(ctx));
 });
 bot.command('admin', ctx => {
-    console.log(ctx.chat.type);
     if (ctx.from._is_in_admin_list) {
         return ctx.reply('尼是管理員');
     } else {
