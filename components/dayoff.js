@@ -9,16 +9,10 @@ function cleanDayoff() {
     dayoff = null;
 };
 async function getDayoff() {
-    //看看資料是不是被清ㄌ
-    if (!dayoff) {
-        return await dayoffReq()
-    } else {
-        return dayoff
-    }
+    return dayoff || await dayoffReq()
 }
 async function dayoffReq() {
-    let body = await fetch('https://www.dgpa.gov.tw/typh/daily/nds.html')
-        .then(res => res.text())
+    let body = await fetch('https://www.dgpa.gov.tw/typh/daily/nds.html').then(res => res.text())
     var $ = cheerio.load(body),
         city, status, time, city_status, city_name, data = {
             "typhoon": [],
@@ -50,9 +44,6 @@ async function dayoffReq() {
 bot.command('dayoff', async ({
     reply
 }) => {
-    reply('hi', {
-        parse_mode: "markdown",
-    })
     let data = await getDayoff(),
         resp = ''
     for ({

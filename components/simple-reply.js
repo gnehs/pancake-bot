@@ -24,34 +24,28 @@ bot.command('date', ({
 
 // Ping
 bot.command('ping', ({
-    reply
-}) => reply(`*PONG*`, {
-    parse_mode: 'MarkdownV2'
-}))
+    replyWithMarkdown
+}) => replyWithMarkdown(`*PONG*`))
 bot.hears('ping', ({
-    reply
-}) => reply(`*PONG*`, {
-    parse_mode: 'MarkdownV2'
-}))
+    replyWithMarkdown
+}) => replyWithMarkdown(`*PONG*`))
 
 // 髒話偵測
 bot.hears((msg) => msg.match(/幹|幹你娘|趕羚羊/) && !msg.match(/幹嘛/), ({
-    reply
-}) => reply('_QQ_', {
-    parse_mode: "MarkdownV2"
-}));
+    replyWithMarkdown
+}) => replyWithMarkdown('_QQ_'));
 
 bot.hears("怕", ({
     reply
-}) => reply('嚇到吃手手', {
-    parse_mode: "MarkdownV2"
-}));
+}) => reply('嚇到吃手手'));
+
+bot.hears("逼比", ({
+    reply
+}) => reply('蹦蹦'));
 
 bot.hears("喵", ({
-    reply
-}) => reply('`HTTP/3.0 200 OK.`', {
-    parse_mode: "MarkdownV2"
-}));
+    replyWithMarkdown
+}) => replyWithMarkdown('`HTTP/3.0 200 OK.`'));
 
 bot.hears("晚安", ({
     reply,
