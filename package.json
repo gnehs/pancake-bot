@@ -23,7 +23,8 @@
     "cheerio": "^1.0.0-rc.3",
     "node-cron": "^2.0.3",
     "simple-json-db": "^1.2.2",
-    "telegraf": "^3.34.0"
+    "telegraf": "^3.34.0",
+    "telegraf-command-parts": "^1.0.3"
   },
   "devDependencies": {
     "eslint": "^6.7.1",
