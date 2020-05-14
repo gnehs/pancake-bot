@@ -44,11 +44,11 @@ async function sendData() {
                 title,
                 episode
             } of newEpisode) {
-            resp += `*E${episode}* [${title}](${link})\n`
+            resp += `<b>E${episode}</b> <a href="${link}">${title}</a>\n`
         }
         for (chat of Object.keys(db.get('subscribe.baha'))) {
             telegram.sendMessage(chat, resp, {
-                parse_mode: "Markdown",
+                parse_mode: "html",
                 disable_web_page_preview: true
             })
         }
