@@ -13,13 +13,13 @@ bot.help(async ({
 /ping - PONG
 /date - 傳回伺服器的時間
 /dayoff - 台灣行政院人事局的停班課
-/removekbd 移除鍵盤
+/removekbd - 移除鍵盤
 *訂閱功能*
 /subscribe <訂閱編號> - 訂閱
 /unsubscribe <訂閱編號> - 取消訂閱
 *訂閱編號*
 baha - 動畫瘋更新通知
-*測試用*
+*測試*
 /admin - 看看你是不是管理員
 `)
 })
