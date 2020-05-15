@@ -3,8 +3,8 @@ const Composer = require('telegraf/composer')
 const telegram = require('./telegram')
 const bot = new Composer()
 const subscribeIdList = require('../subscribeIdList')
-bot.command('admin', ctx => {
-    if (ctx.from._is_in_admin_list)
+bot.command('admin', async ctx => {
+    if (await isAdmin(ctx))
         return ctx.reply('尼是管理員');
     else
         return ctx.reply('尼不是管理員');
