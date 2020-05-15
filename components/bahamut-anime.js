@@ -46,19 +46,25 @@ async function sendData() {
     let newEpisode = []
     let recentAdded = []
     let sentEpisode = db.get('bahamut-sent') || {}
-    for (item of fetchedData.newEpisode) {
-        if (!sentEpisode[item.id]) {
+    // 新增的內容
+    for (item of fetchedData.newEpisode)
+        if (!sentEpisode[item.id])
             newEpisode.push(item)
-            sentEpisode[item.id] = true
-        }
-    }
-    for (item of fetchedData.recentAdded) {
-        if (!sentEpisode[item.id]) {
+    for (item of fetchedData.recentAdded)
+        if (!sentEpisode[item.id])
             recentAdded.push(item)
-            sentEpisode[item.id] = true
-        }
-    }
+    // 重置已發送ㄉ資料
+    sentEpisode = {}
+    for ({
+            id
+        } of fetchedData.newEpisode)
+        sentEpisode[id] = true
+    for ({
+            id
+        } of fetchedData.recentAdded)
+        sentEpisode[id] = true
     db.set('bahamut-sent', sentEpisode)
+    // 送資料
     if (newEpisode.length || recentAdded.length) {
         let resp = "#ㄅㄏ動畫瘋更新菌\n"
         for ({
