@@ -27,6 +27,8 @@ bot.hears("逼比", ({ reply }) => reply('蹦蹦'));
 
 bot.hears("喵", ({ replyWithMarkdown }) => replyWithMarkdown('`HTTP /3.0 200 OK.`'));
 
+bot.hears("嗨", ({ replyWithSticker }) => replyWithSticker('https://data.gnehs.net/stickers/hello.webp'));
+
 bot.hears("晚安", ({ reply, message, replyWithSticker }) => {
     replyWithSticker('https://data.gnehs.net/stickers/good%20night.webp')
     reply(`${message.from.first_name}，晚安❤️`)
