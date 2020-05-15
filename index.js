@@ -1,8 +1,5 @@
-const {
-    Telegraf
-} = require('telegraf')
+const { Telegraf } = require('telegraf')
 const session = require('telegraf/session')
-const Composer = require('telegraf/composer')
 const commandParts = require('telegraf-command-parts');
 const bot = new Telegraf(process.env.BOT_TOKEN)
 bot.use(session())
