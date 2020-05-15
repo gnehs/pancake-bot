@@ -24,7 +24,7 @@ async function fetchData() {
         recentAdded.push({
             id: `recent_${anime_sn}`,
             title,
-            link: `https://ani.gamer.com.tw/animeVideo.php?sn=${anime_sn}`,
+            link: `https://ani.gamer.com.tw/animeRef.php?sn=${anime_sn}`,
         })
     }
     return {
