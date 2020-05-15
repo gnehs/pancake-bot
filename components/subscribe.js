@@ -19,16 +19,17 @@ bot.use((ctx, next) => {
         .then(_ => next(ctx));
 });
 bot.command('admin', ctx => {
-    if (ctx.from._is_in_admin_list) {
+    if (ctx.from._is_in_admin_list)
         return ctx.reply('尼是管理員');
-    } else {
+    else
         return ctx.reply('尼不是管理員');
-    }
 });
 
 function isAdmin(ctx) {
-    if (ctx.chat.type == 'group' || ctx.chat.type == 'supergroup') return ctx.from._is_in_admin_list
-    else return true
+    if (ctx.chat.type == 'group' || ctx.chat.type == 'supergroup')
+        return ctx.from._is_in_admin_list
+    else
+        return true
 }
 
 function subscribe(key, id) {

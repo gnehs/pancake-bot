@@ -41,15 +41,10 @@ async function dayoffReq() {
     dayoff = data
     return dayoff
 }
-bot.command('dayoff', async ({
-    reply
-}) => {
+bot.command('dayoff', async ({ reply }) => {
     let data = await getDayoff(),
         resp = ''
-    for ({
-            city_name,
-            city_status
-        } of data.typhoon) {
+    for ({ city_name, city_status } of data.typhoon) {
         resp += `${city_name} ${city_status}\n`;
     }
     //更新時間
@@ -59,8 +54,6 @@ bot.command('dayoff', async ({
 \`詳細及最新情報以\` [行政院人事行政總處](goo.gl/GjmZnR) \`公告為主\`
 ${time}`;
 
-    reply(resp, {
-        parse_mode: "markdown",
-    })
+    reply(resp, { parse_mode: "markdown", })
 })
 module.exports = bot

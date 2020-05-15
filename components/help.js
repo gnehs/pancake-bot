@@ -2,9 +2,7 @@ const Composer = require('telegraf/composer')
 const bot = new Composer()
 const telegram = require('./telegram')
 
-bot.help(async ({
-    replyWithMarkdown
-}) => {
+bot.help(async ({ replyWithMarkdown }) => {
     let {
         first_name
     } = await telegram.getMe()

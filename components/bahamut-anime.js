@@ -11,11 +11,7 @@ async function fetchData() {
     let data = await fetch('https://api.gamer.com.tw/mobile_app/anime/v1/index.php').then(res => res.json())
     let newEpisode = []
     let recentAdded = []
-    for ({
-            video_sn,
-            title,
-            info
-        } of data.new_anime.date) {
+    for ({ video_sn, title, info } of data.new_anime.date) {
         let episode = info.match(/\[(.+)\]/)[1]
         newEpisode.push({
             id: video_sn,
@@ -24,11 +20,7 @@ async function fetchData() {
             episode: episode.length >= 2 ? episode : `0${episode}`,
         })
     }
-    for ({
-            anime_sn,
-            title,
-            info
-        } of data.new_added) {
+    for ({ anime_sn, title, info } of data.new_added) {
         recentAdded.push({
             id: `recent_${anime_sn}`,
             title,
@@ -55,31 +47,20 @@ async function sendData() {
             recentAdded.push(item)
     // 重置已發送ㄉ資料
     sentEpisode = {}
-    for ({
-            id
-        } of fetchedData.newEpisode)
+    for ({ id } of fetchedData.newEpisode)
         sentEpisode[id] = true
-    for ({
-            id
-        } of fetchedData.recentAdded)
+    for ({ id } of fetchedData.recentAdded)
         sentEpisode[id] = true
     db.set('bahamut-sent', sentEpisode)
     // 送資料
     if (newEpisode.length || recentAdded.length) {
         let resp = "#ㄅㄏ動畫瘋更新菌\n"
-        for ({
-                link,
-                title,
-                episode
-            } of newEpisode) {
+        for ({ link, title, episode } of newEpisode) {
             resp += `<b>E${episode}</b> <a href="${link}">${title}</a>\n`
         }
         if (recentAdded.length) {
             resp += `<b>最近新增</b>\n`
-            for ({
-                    link,
-                    title
-                } of recentAdded) {
+            for ({ link, title } of recentAdded) {
                 resp += `<a href="${link}">${title}</a>\n`
             }
         }
