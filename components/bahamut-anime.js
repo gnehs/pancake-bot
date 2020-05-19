@@ -56,7 +56,8 @@ async function sendData() {
     if (newEpisode.length || recentAdded.length) {
         let resp = "#ㄅㄏ動畫瘋更新菌\n"
         for ({ link, title, episode } of newEpisode) {
-            resp += `<b>E${episode}</b> <a href="${link}">${title}</a>\n`
+            let ep = isNaN(episode) ? episode : `E${episode}`
+            resp += `<b>${ep}</b> <a href="${link}">${title}</a>\n`
         }
         if (recentAdded.length) {
             resp += `<b>最近新增</b>\n`
