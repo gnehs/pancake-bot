@@ -49,7 +49,7 @@ bot.command('subscribe', async ctx => {
     if (await isAdmin(ctx)) {
         let args = ctx.state.command.splitArgs
         let chatId = ctx.message.chat.id
-        if (args.length) {
+        if (args[0] !== '') {
             for (id in subscribeIdList) {
                 if (args[0] == id) {
                     ctx.replyWithSticker('https://data.gnehs.net/stickers/ohohoh.webp', {
@@ -71,10 +71,10 @@ bot.command('unsubscribe', async ctx => {
     if (await isAdmin(ctx)) {
         let args = ctx.state.command.splitArgs
         let chatId = ctx.message.chat.id
-        if (args.length) {
+        if (args[0] !== '') {
             for (id in subscribeIdList) {
                 if (args[0] == id) {
-                    ctx.replyWithSticker('https://data.gnehs.net/stickers/ohohoh.webp', { reply_to_message_id: ctx.message.message_id })
+                    ctx.replyWithSticker('https://data.gnehs.net/stickers/bye.webp', { reply_to_message_id: ctx.message.message_id })
                     telegram.sendChatAction(ctx.chat.id, "typing");
                     unsubscribe(id, args[1] || null, chatId)
                     ctx.replyWithMarkdown(`👋 取消訂閱「${subscribeIdList[id]}」成功。`, { reply_to_message_id: ctx.message.message_id })
