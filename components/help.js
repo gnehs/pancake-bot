@@ -19,8 +19,8 @@ bot.help(async ({ replyWithMarkdown }) => {
 /removekbd - 移除鍵盤
 
 *訂閱功能*
-/subscribe <訂閱編號> - 訂閱
-/unsubscribe <訂閱編號> - 取消訂閱
+/subscribe <訂閱編號> <可選參數> - 訂閱
+/unsubscribe <訂閱編號> <可選參數> - 取消訂閱
 
 *訂閱編號*
 ${subscribeIdList}
