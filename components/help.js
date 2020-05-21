@@ -9,9 +9,9 @@ function parseSubscribeIdList() {
     subscribeIdList = result
 }
 parseSubscribeIdList()
-bot.help(async ({ replyWithMarkdown }) => {
+bot.help(async ctx => {
     let { first_name } = await telegram.getMe()
-    replyWithMarkdown(`*${first_name}的指令清單*
+    ctx.replyWithMarkdown(`*${first_name}的指令清單*
 /start - 開始
 /ping - PONG
 /date - 傳回伺服器的時間
@@ -26,6 +26,6 @@ bot.help(async ({ replyWithMarkdown }) => {
 ${subscribeIdList}
 *測試*
 /admin - 看看你是不是管理員
-`)
+`, { reply_to_message_id: ctx.message.message_id })
 })
 module.exports = bot
