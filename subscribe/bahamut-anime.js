@@ -1,6 +1,6 @@
-const db = require('./db')
+const db = require('../components/db')
 const Composer = require('telegraf/composer')
-const telegram = require('./telegram')
+const telegram = require('../components/telegram')
 const bot = new Composer()
 const cron = require('node-cron');
 const fetch = require('node-fetch');
@@ -13,11 +13,12 @@ async function fetchData() {
     let recentAdded = []
     for ({ video_sn, title, info } of data.new_anime.date) {
         let episode = info.match(/\[(.+)\]/)[1]
+        episode = episode.length >= 2 ? episode : `0${episode}`
         newEpisode.push({
             id: video_sn,
             title,
             link: `https://ani.gamer.com.tw/animeVideo.php?sn=${video_sn}`,
-            episode: episode.length >= 2 ? episode : `0${episode}`,
+            episode,
         })
     }
     for ({ anime_sn, title, info } of data.new_added) {
@@ -56,7 +57,7 @@ async function sendData() {
     if (newEpisode.length || recentAdded.length) {
         let resp = "#ㄅㄏ動畫瘋更新菌\n"
         for ({ link, title, episode } of newEpisode) {
-            let ep = isNaN(episode) ? episode : `E${episode}`
+            let ep = isNaN(episode) ? episode : `E${episode}` // 有時候會解析出「電影」之類的東西所以要過濾一下
             resp += `<b>${ep}</b> <a href="${link}">${title}</a>\n`
         }
         if (recentAdded.length) {
