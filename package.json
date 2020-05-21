@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "moment": "^2.26.0",
     "node-cron": "^2.0.3",
     "simple-json-db": "^1.2.2",
     "telegraf": "^3.34.0",
