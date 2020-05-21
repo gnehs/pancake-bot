@@ -6,7 +6,7 @@ bot.use(session())
 bot.use(commandParts());
 
 // components
-const bahamut = require('./components/bahamut-anime')
+const bahamut = require('./subscribe/bahamut-anime')
 const simpleReply = require('./components/simple-reply')
 const dayoff = require('./components/dayoff')
 const subscribe = require('./components/subscribe')
