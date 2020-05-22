@@ -19,7 +19,7 @@ bot.command('ping', ({ replyWithMarkdown, message }) => replyWithMarkdown(`*PONG
 bot.hears('ping', ({ replyWithMarkdown, message }) => replyWithMarkdown(`*PONG*`, { reply_to_message_id: message.message_id }))
 
 // 髒話偵測
-bot.hears((msg) => msg.match(/幹|幹你娘|趕羚羊/) && !msg.match(/幹嘛/), ({ replyWithMarkdown }) => replyWithMarkdown('_QQ_'));
+bot.hears(msg => msg.match(/幹|幹你娘|趕羚羊/) && !msg.match(/幹嘛/), ({ replyWithMarkdown }) => replyWithMarkdown('_QQ_'));
 
 bot.hears("怕", ({ reply, message }) => reply('嚇到吃手手', { reply_to_message_id: message.message_id }));
 

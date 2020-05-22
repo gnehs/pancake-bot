@@ -1,6 +1,7 @@
 const db = require('./db')
 const Composer = require('telegraf/composer')
 const telegram = require('./telegram')
+const fetch = require('node-fetch');
 const bot = new Composer()
 const subscribeIdList = require('../subscribeIdList')
 bot.command('admin', async ctx => {
@@ -56,6 +57,12 @@ bot.command('subscribe', async ctx => {
                         reply_to_message_id: ctx.message.message_id
                     })
                     telegram.sendChatAction(ctx.chat.id, "typing");
+                    // GitHub 檢查有沒有這個 Repo
+                    if (id === 'github-release') {
+                        let testFetch = await fetch(`https://api.github.com/repos/${args[1]}/releases`).then(res => res.json())
+                        if (testFetch.message)
+                            return ctx.replyWithMarkdown(`❌ 無法訂閱「${subscribeIdList[id]}」，請確定 Repo 名稱是否正確。\n錯誤訊息：\`${testFetch.message}\``, { reply_to_message_id: ctx.message.message_id })
+                    }
                     subscribe(id, args[1] || null, chatId)
                     ctx.replyWithMarkdown(`🎉 已訂閱「${subscribeIdList[id]}」，使用 \`/unsubscribe ${id}${args[1] ? ' ' + args[1] : ''}\` 來取消訂閱。`, { reply_to_message_id: ctx.message.message_id })
                 }
