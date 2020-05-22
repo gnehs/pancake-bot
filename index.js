@@ -7,11 +7,12 @@ bot.use(commandParts());
 
 // components
 const bahamut = require('./subscribe/bahamut-anime')
+const githubRelease = require('./subscribe/github-release')
 const simpleReply = require('./components/simple-reply')
 const dayoff = require('./components/dayoff')
 const subscribe = require('./components/subscribe')
 const help = require('./components/help')
-bot.use(bahamut, simpleReply, dayoff, subscribe, help);
+bot.use(bahamut, githubRelease, simpleReply, dayoff, subscribe, help);
 
 
 module.exports = bot
