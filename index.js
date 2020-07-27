@@ -6,13 +6,15 @@ bot.use(session())
 bot.use(commandParts());
 
 // components
-const bahamut = require('./subscribe/bahamut-anime')
-const githubRelease = require('./subscribe/github-release')
-const simpleReply = require('./components/simple-reply')
-const dayoff = require('./components/dayoff')
-const subscribe = require('./components/subscribe')
-const help = require('./components/help')
-bot.use(bahamut, githubRelease, simpleReply, dayoff, subscribe, help);
+bot.use(
+    require('./subscribe/bahamut-anime'),
+    require('./subscribe/github-release'),
+    require('./components/simple-reply'),
+    require('./components/dayoff'),
+    require('./components/subscribe'),
+    require('./components/help'),
+    require('./components/sticker')
+);
 
 
 module.exports = bot
