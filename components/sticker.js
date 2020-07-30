@@ -58,10 +58,15 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
                     top: 25, bottom: 25, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
                 })
                 .toBuffer()
-            stickerRes = await sharp('./sticker/blobbies.png').composite([{ input: textRes, top: 10, left: 0 }]).webp().toBuffer()
-            return ({ type: 'sticker', id: 'blobbies', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
-            //stickerRes = await sharp('./sticker/sadblobbies.png').composite([{ input: textRes, top: 10, left: 0 }]).webp().toBuffer()
-            //results.push({ type: 'sticker', id: 'sadblobbies', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
+            async function genBlobbiesHappy() {
+                stickerRes = await sharp('./sticker/blobbies.png').composite([{ input: textRes, top: 10, left: 0 }]).webp().toBuffer()
+                results.push({ type: 'sticker', id: 'blobbies', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
+            }
+            async function genBlobbiesSad() {
+                stickerRes = await sharp('./sticker/sadblobbies.png').composite([{ input: textRes, top: 10, left: 0 }]).webp().toBuffer()
+                results.push({ type: 'sticker', id: 'sadblobbies', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
+            }
+            return Promise.all([genBlobbiesHappy(), genBlobbiesSad()])
         }
         async function genDuck() {
             let attributes, options, textRes, stickerRes
@@ -74,7 +79,7 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
                 })
                 .toBuffer()
             stickerRes = await sharp('./sticker/duck.png').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
-            return ({ type: 'sticker', id: 'duck', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
+            results.push({ type: 'sticker', id: 'duck', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
         }
         async function genDono() {
             let attributes, options, textRes, stickerRes
@@ -86,12 +91,17 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
                     top: 10, bottom: 10, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
                 })
                 .toBuffer()
-            stickerRes = await sharp('./sticker/dono.webp').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
-            return ({ type: 'sticker', id: 'dono', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
-            //stickerRes = await sharp('./sticker/iknow.webp').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
-            //results.push({ type: 'sticker', id: 'iknow', sticker_file_id: (await stickerFileBuffertoId(stickerRes)) })
+            async function pushDono() {
+                stickerRes = await sharp('./sticker/dono.webp').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
+                results.push({ type: 'sticker', id: 'dono', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
+            }
+            async function pushIknow() {
+                stickerRes = await sharp('./sticker/iknow.webp').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
+                results.push({ type: 'sticker', id: 'iknow', sticker_file_id: (await stickerFileBuffertoId(stickerRes)) })
+            }
+            return Promise.all([pushDono(), pushIknow()])
         }
-        results = await Promise.all([
+        await Promise.all([
             genBlobbies(),
             genDono(),
             genDuck()
