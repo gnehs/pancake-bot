@@ -57,7 +57,6 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
         attributes = { fill: '#bcbdc8', stroke: 'white' };
         options = { x: 0, y: 0, fontSize: 196, anchor: 'top', attributes };
         textRes = await sharp(Buffer.from(svgNotoBold.getSVG(text, options)))
-            .trim()
             .resize(332 - 30, 136 - 50, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
             .extend({
                 top: 25, bottom: 25, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
@@ -68,25 +67,11 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
         //stickerRes = await sharp('./sticker/sadblobbies.png').composite([{ input: textRes, top: 10, left: 0 }]).webp().toBuffer()
         //results.push({ type: 'sticker', id: 'sadblobbies', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
         //
-        //   genText
-        //
-        /* 
-         attributes = { fill: '#000', stroke: 'white' };
-         options = { x: 0, y: 0, fontSize: 72, anchor: 'top', attributes };
-         textRes = await sharp(Buffer.from(svgNotoBold.getSVG(text, options)))
-             .trim()
-             .resize(512, 512, { fit: 'inside' })
-             .webp()
-             .toBuffer()
-         results.push({ type: 'sticker', id: 'text', sticker_file_id: await stickerFileBuffertoId(textRes) })
-         */
-        //
         //   duck
         //
         attributes = { fill: 'white' };
         options = { x: 0, y: 0, fontSize: 196, anchor: 'top', attributes };
         textRes = await sharp(Buffer.from(svgHuninn.getSVG(text, options)))
-            .trim()
             .resize(512 - 30, 225 - 80, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
             .extend({
                 top: 40, bottom: 40, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
@@ -100,7 +85,6 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
         attributes = { fill: 'black' };
         options = { x: 0, y: 0, fontSize: 196, anchor: 'top', attributes };
         textRes = await sharp(Buffer.from(svgHuninn.getSVG(text, options)))
-            .trim()
             .resize(512 - 30, 106 - 20, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
             .extend({
                 top: 10, bottom: 10, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
