@@ -101,10 +101,24 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
             }
             return Promise.all([pushDono(), pushIknow()])
         }
+        async function genLeaf() {
+            let attributes, options, textRes, stickerRes
+            attributes = { fill: 'black' };
+            options = { x: 0, y: 0, fontSize: 72, anchor: 'top', attributes, y: -18 };
+            textRes = await sharp(Buffer.from(svgNotoBold.getSVG(text, options)))
+                .resize(346 - 30, 38 - 6, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+                .extend({
+                    top: 3, bottom: 3, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
+                })
+                .toBuffer()
+            stickerRes = await sharp('./sticker/leaf.png').composite([{ input: textRes, top: 262, left: 83 }]).webp().toBuffer()
+            results.push({ type: 'sticker', id: 'leaf', sticker_file_id: (await stickerFileBuffertoId(stickerRes)) })
+        }
         await Promise.all([
             genBlobbies(),
             genDono(),
-            genDuck()
+            genDuck(),
+            genLeaf()
         ])
     } catch (e) {
         console.log(e)
