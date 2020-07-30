@@ -71,7 +71,7 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
         async function genDuck() {
             let attributes, options, textRes, stickerRes
             attributes = { fill: 'white' };
-            options = { x: 0, y: 0, fontSize: 196, anchor: 'top', attributes };
+            options = { x: 0, y: 0, fontSize: 196, anchor: 'top', attributes, y: -18 };
             textRes = await sharp(Buffer.from(svgHuninn.getSVG(text, options)))
                 .resize(512 - 30, 225 - 80, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
                 .extend({
@@ -84,7 +84,7 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
         async function genDono() {
             let attributes, options, textRes, stickerRes
             attributes = { fill: 'black' };
-            options = { x: 0, y: 0, fontSize: 196, anchor: 'top', attributes };
+            options = { x: 0, y: 0, fontSize: 196, anchor: 'top', attributes, y: -18 };
             textRes = await sharp(Buffer.from(svgHuninn.getSVG(text, options)))
                 .resize(512 - 30, 106 - 20, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
                 .extend({
