@@ -52,15 +52,8 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
                     top: 25, bottom: 25, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
                 })
                 .toBuffer()
-            async function genBlobbiesHappy() {
-                stickerRes = await sharp('./sticker/blobbies.png').composite([{ input: textRes, top: 10, left: 0 }]).webp().toBuffer()
-                results.push({ type: 'sticker', id: 'blobbies', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
-            }
-            async function genBlobbiesSad() {
-                stickerRes = await sharp('./sticker/sadblobbies.png').composite([{ input: textRes, top: 10, left: 0 }]).webp().toBuffer()
-                results.push({ type: 'sticker', id: 'sadblobbies', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
-            }
-            return Promise.all([genBlobbiesHappy(), genBlobbiesSad()])
+            stickerRes = await sharp('./sticker/blobbies.png').composite([{ input: textRes, top: 10, left: 0 }]).webp().toBuffer()
+            results.push({ type: 'sticker', id: 'blobbies', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
         }
         async function genDuck() {
             let attributes, options, textRes, stickerRes
