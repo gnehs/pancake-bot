@@ -3,6 +3,14 @@ const Composer = require('telegraf/composer')
 const telegram = require('./telegram')
 const bot = new Composer()
 const sharp = require('sharp');
+const chats = [
+    /* 一個聊天室每秒可發送 20 條訊息，每機器人每秒限制 30 條訊息 */
+    -1001426216931,
+    -1001280077302,
+    -1001426220127,
+    -1001468572990
+]
+const getRandomChat = () => chats[Math.floor(Math.random() * chats.length)]
 const svgNotoBold = require('text-to-svg').loadSync('./font/NotoSansCJKtc-Bold.otf');
 const svgHuninn = require('text-to-svg').loadSync('./font/jf-openhuninn-1.1.ttf');
 let cacheResult = {}
@@ -15,7 +23,7 @@ async function start() {
 async function stickerFiletoId(url) {
     if (cacheStickerId[url])
         return cacheStickerId[url]
-    let msg = await telegram.sendDocument(-1001280077302/* 請開一ㄍ群組 */, {
+    let msg = await telegram.sendDocument(getRandomChat(), {
         source: require('fs').readFileSync(url),
         filename: 'sticker-gen.webp'
     })
@@ -23,13 +31,12 @@ async function stickerFiletoId(url) {
     return msg.sticker.file_id
 }
 async function stickerFileBuffertoId(source) {
-    let msg = await telegram.sendDocument(-1001280077302/* 請開一ㄍ群組 */, {
+    let msg = await telegram.sendDocument(getRandomChat(), {
         source,
         filename: 'sticker-gen.webp'
     })
     return msg.sticker.file_id
 }
-
 bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
     let text = inlineQuery.query
     if (cacheResult[text]) {
@@ -71,7 +78,7 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
              .resize(512, 512, { fit: 'inside' })
              .webp()
              .toBuffer()
-         results.push({ type: 'sticker', id: 'duck', sticker_file_id: await stickerFileBuffertoId(textRes) })
+         results.push({ type: 'sticker', id: 'text', sticker_file_id: await stickerFileBuffertoId(textRes) })
          */
         //
         //   duck
