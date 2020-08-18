@@ -49,18 +49,16 @@ bot.on('chosen_inline_result', ({ chosenInlineResult }) => {
     console.log('chosen inline result', chosenInlineResult)
 })
 fs.readdir('./components/puffy/', async (err, files) => {
-    let filelist = []
-    files.forEach((file, id) => {
-        filelist.push(file)
+    files = files.filter(x => x != '.DS_Store')
+    files.forEach(file => {
         let name = file.replace('.jpg', '')
         index.add(file, name);
     });
     // 移除已經不存在的圖片
     let cacheData = db.get('puffyCache') || {}
     for (let cachedfile of Object.keys(cacheData)) {
-        if (!filelist.includes(cachedfile)) {
+        if (!files.includes(cachedfile)) {
             delete cacheData[cachedfile]
-            console.log('del', cachedfile);
         }
     }
     // 快取
