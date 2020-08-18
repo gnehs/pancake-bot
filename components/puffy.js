@@ -49,11 +49,20 @@ bot.on('chosen_inline_result', ({ chosenInlineResult }) => {
     console.log('chosen inline result', chosenInlineResult)
 })
 fs.readdir('./components/puffy/', async (err, files) => {
+    let filelist = []
     files.forEach((file, id) => {
+        filelist.push(file)
         let name = file.replace('.jpg', '')
         index.add(file, name);
     });
-    console.log(`已匯入`);
+    // 移除已經不存在的圖片
+    let cacheData = db.get('puffyCache') || {}
+    for (let cachedfile of Object.keys(cacheData)) {
+        if (!filelist.includes(cachedfile)) {
+            delete cacheData[cachedfile]
+            console.log('del', cachedfile);
+        }
+    }
     // 快取
     const delay = (s) => {
         return new Promise(resolve => {
@@ -61,7 +70,7 @@ fs.readdir('./components/puffy/', async (err, files) => {
         });
     };
     for (let file of files) {
-        let cacheData = db.get('puffyCache') || {}
+        cacheData = db.get('puffyCache') || {}
         if (!cacheData[file]) {
             console.log(`[${Object.keys(cacheData).length}/${files.length}]正在快取 ${file}`)
             imageFiletoId(file)
