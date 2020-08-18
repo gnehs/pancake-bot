@@ -6,6 +6,7 @@ bot.use(session())
 bot.use(commandParts());
 
 // components
+const inlineProcessor = require('./config').inlineProcessor;
 bot.use(
     require('./subscribe/bahamut-anime'),
     require('./subscribe/github-release'),
@@ -13,7 +14,7 @@ bot.use(
     require('./components/dayoff'),
     require('./components/subscribe'),
     require('./components/help'),
-    require('./components/sticker')
+    require(`./components/${inlineProcessor}`)
 );
 
 
