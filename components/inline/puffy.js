@@ -50,7 +50,7 @@ async function answer({ inlineQuery, answerInlineQuery }) {
             id: 'puffy_404',
             title: '查無結果',
             description: '沒有找到你想要的圖捏，試試其他關鍵字？',
-            thumb_url: 'https://i.loli.net/2020/10/11/Vitra1wnSOAWMRg.jpg',
+            thumb_url: 'https://i.loli.net/2020/10/11/vuoGq4PDaLYdfhT.jpg',
             input_message_content: {
                 message_text: `蓬蓬小褲褲！`
             }
