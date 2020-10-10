@@ -6,7 +6,7 @@ const telegram = require('./telegram')
 const fs = require('fs');
 const index = require("flexsearch").create({
     encode: false,
-    tokenize: str => str.replace(/[\x00-\x7F]/g, "").split("")
+    tokenize: x => x.split("")
 });
 const chats = require('../config').chats;
 const getRandomChat = () => chats[Math.floor(Math.random() * chats.length)]
@@ -51,8 +51,8 @@ async function answer({ inlineQuery, answerInlineQuery }) {
             title: '查無結果',
             description: '沒有找到你想要的圖捏，試試其他關鍵字？',
             input_message_content: {
-                message_text: `蓬蓬小褲褲！`,
-            },
+                message_text: `蓬蓬小褲褲！`
+            }
         })
     }
     return answerInlineQuery(results, { cache_time: 60 * 60 /* second */ })
