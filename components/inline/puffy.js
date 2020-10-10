@@ -44,7 +44,6 @@ async function answer({ inlineQuery, answerInlineQuery }) {
     await Promise.all(tasks)
     console.log(`[${'@' + inlineQuery.from.username || inlineQuery.from.first_name}][${text}] 處理完畢`)
     if (!results.length) {
-        console.log('404');
         results.push({
             type: 'article',
             id: 'puffy_404',
