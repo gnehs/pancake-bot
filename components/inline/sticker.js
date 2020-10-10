@@ -4,14 +4,14 @@ const telegram = require('../telegram')
 const sharp = require('sharp');
 const chats = require('../../config').chats;
 const getRandomChat = () => chats[Math.floor(Math.random() * chats.length)]
-const svgNotoBold = require('text-to-svg').loadSync('./font/NotoSansCJKtc-Bold.otf');
-const svgHuninn = require('text-to-svg').loadSync('./font/jf-openhuninn-1.1.ttf');
+const svgNotoBold = require('text-to-svg').loadSync('./components/inline/sticker/font/NotoSansCJKtc-Bold.otf');
+const svgHuninn = require('text-to-svg').loadSync('./components/inline/sticker/font/jf-openhuninn-1.1.ttf');
 let cacheResult = {}
 let cacheStickerId = {}
 let moretextplz, tooManyRequests
 async function start() {
-    moretextplz = await stickerFiletoId('./components/inline/sticker/moretextplz.webp')
-    tooManyRequests = await stickerFiletoId('./components/inline/sticker/tooManyRequests.webp')
+    moretextplz = await stickerFiletoId('./components/inline/sticker/img/moretextplz.webp')
+    tooManyRequests = await stickerFiletoId('./components/inline/sticker/img/tooManyRequests.webp')
 }
 async function stickerFiletoId(url) {
     if (cacheStickerId[url])
@@ -51,7 +51,7 @@ async function answer({ inlineQuery, answerInlineQuery }) {
                     top: 25, bottom: 25, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
                 })
                 .toBuffer()
-            stickerRes = await sharp('./components/inline/sticker/blobbies.png').composite([{ input: textRes, top: 10, left: 0 }]).webp().toBuffer()
+            stickerRes = await sharp('./components/inline/sticker/img/blobbies.png').composite([{ input: textRes, top: 10, left: 0 }]).webp().toBuffer()
             results.push({ type: 'sticker', id: 'blobbies', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
         }
         async function genDuck() {
@@ -64,7 +64,7 @@ async function answer({ inlineQuery, answerInlineQuery }) {
                     top: 40, bottom: 40, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
                 })
                 .toBuffer()
-            stickerRes = await sharp('./components/inline/sticker/duck.png').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
+            stickerRes = await sharp('./components/inline/sticker/img/duck.png').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
             results.push({ type: 'sticker', id: 'duck', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
         }
         async function genDono() {
@@ -78,11 +78,11 @@ async function answer({ inlineQuery, answerInlineQuery }) {
                 })
                 .toBuffer()
             async function pushDono() {
-                stickerRes = await sharp('./components/inline/sticker/dono.webp').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
+                stickerRes = await sharp('./components/inline/sticker/img/dono.webp').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
                 results.push({ type: 'sticker', id: 'dono', sticker_file_id: await stickerFileBuffertoId(stickerRes) })
             }
             async function pushIknow() {
-                stickerRes = await sharp('./components/inline/sticker/iknow.webp').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
+                stickerRes = await sharp('./components/inline/sticker/img/iknow.webp').composite([{ input: textRes, top: 0, left: 0 }]).webp().toBuffer()
                 results.push({ type: 'sticker', id: 'iknow', sticker_file_id: (await stickerFileBuffertoId(stickerRes)) })
             }
             return Promise.all([pushDono(), pushIknow()])
@@ -97,7 +97,7 @@ async function answer({ inlineQuery, answerInlineQuery }) {
                     top: 3, bottom: 3, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
                 })
                 .toBuffer()
-            stickerRes = await sharp('./components/inline/sticker/leaf.png').composite([{ input: textRes, top: 262, left: 83 }]).webp().toBuffer()
+            stickerRes = await sharp('./components/inline/sticker/img/leaf.png').composite([{ input: textRes, top: 262, left: 83 }]).webp().toBuffer()
             results.push({ type: 'sticker', id: 'leaf', sticker_file_id: (await stickerFileBuffertoId(stickerRes)) })
         }
         await Promise.all([
