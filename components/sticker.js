@@ -1,7 +1,6 @@
 
 const Composer = require('telegraf/composer')
 const telegram = require('./telegram')
-const bot = new Composer()
 const sharp = require('sharp');
 const chats = require('../config').chats;
 const getRandomChat = () => chats[Math.floor(Math.random() * chats.length)]
@@ -31,7 +30,7 @@ async function stickerFileBuffertoId(source) {
     })
     return msg.sticker.file_id
 }
-bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
+async function answer({ inlineQuery, answerInlineQuery }) {
     let text = inlineQuery.query
     if (cacheResult[text]) {
         console.log(`[${inlineQuery.from.username || inlineQuery.from.first_name}][${text}] cached`)
@@ -115,10 +114,7 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
     console.log(`[${'@' + inlineQuery.from.username || inlineQuery.from.first_name}][${text}] 處理完畢`)
     cacheResult[text] = results
     return answerInlineQuery(results, { cache_time: 60 * 40 /* second */ })
-})
+}
 
-bot.on('chosen_inline_result', ({ chosenInlineResult }) => {
-    console.log('chosen inline result', chosenInlineResult)
-})
 start()
-module.exports = bot
+module.exports = answer
