@@ -24,7 +24,7 @@ async function imageFiletoId(file) {
 }
 
 async function answer({ inlineQuery, answerInlineQuery }) {
-    let text = inlineQuery.query
+    let text = inlineQuery.query.split(' ')[1]
     let searchResult = index.search(text, cacheFinished ? 100 : 4)
     let results = []
     let tasks = []

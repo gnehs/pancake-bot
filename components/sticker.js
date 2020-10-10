@@ -31,7 +31,7 @@ async function stickerFileBuffertoId(source) {
     return msg.sticker.file_id
 }
 async function answer({ inlineQuery, answerInlineQuery }) {
-    let text = inlineQuery.query
+    let text = inlineQuery.query.split(' ')[1]
     if (cacheResult[text]) {
         console.log(`[${inlineQuery.from.username || inlineQuery.from.first_name}][${text}] cached`)
         return answerInlineQuery(cacheResult[text], { cache_time: 60 * 40 /* second */ })
