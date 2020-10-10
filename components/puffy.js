@@ -22,7 +22,8 @@ async function imageFiletoId(file) {
     db.set('puffyCache', cacheData);
     return photoId
 }
-bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
+
+async function answer({ inlineQuery, answerInlineQuery }) {
     let text = inlineQuery.query
     let searchResult = index.search(text, cacheFinished ? 100 : 4)
     let results = []
@@ -43,11 +44,8 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
     await Promise.all(tasks)
     console.log(`[${'@' + inlineQuery.from.username || inlineQuery.from.first_name}][${text}] 處理完畢`)
     return answerInlineQuery(results, { cache_time: 60 * 60 /* second */ })
-})
+}
 
-bot.on('chosen_inline_result', ({ chosenInlineResult }) => {
-    console.log('chosen inline result', chosenInlineResult)
-})
 fs.readdir('./components/puffy/', async (err, files) => {
     files = files.filter(x => x != '.DS_Store')
     files.forEach(file => {
@@ -78,4 +76,4 @@ fs.readdir('./components/puffy/', async (err, files) => {
     cacheFinished = true
     console.log(`${index.length} 張圖片快取完畢`);
 });
-module.exports = bot
+module.exports = answer

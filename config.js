@@ -6,14 +6,4 @@ module.exports = {
         -1001426220127,
         -1001468572990
     ],
-    //
-    //      Inline Processor
-    //        行內訊息處理器
-    //
-    // 目前只能放一個，不然我怕會蹦蹦：（
-    //
-    // 處理器清單：
-    // sticker   貼圖產生器 
-    // puffy     海綿寶寶貼圖產生器 蓬蓬小褲褲！
-    inlineProcessor: "puffy"
 }
