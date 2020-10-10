@@ -1,21 +1,21 @@
 
 const Composer = require('telegraf/composer')
 const bot = new Composer()
-const db = require('./db')
-const telegram = require('./telegram')
+const db = require('../db')
+const telegram = require('../telegram')
 const fs = require('fs');
 const index = require("flexsearch").create({
     encode: false,
     tokenize: x => x.split("")
 });
-const chats = require('../config').chats;
+const chats = require('../../config').chats;
 const getRandomChat = () => chats[Math.floor(Math.random() * chats.length)]
 let cacheFinished = false
 async function imageFiletoId(file) {
     let cacheData = db.get('puffyCache') || {}
     if (cacheData[file]) return cacheData[file] // check cache && return
     let msg = await telegram.sendPhoto(getRandomChat(), {
-        source: require('fs').readFileSync('./components/puffy/' + file)
+        source: require('fs').readFileSync('./components/inline/puffy/' + file)
     })
     let photoId = msg.photo.pop().file_id
     cacheData[file] = photoId
@@ -58,7 +58,7 @@ async function answer({ inlineQuery, answerInlineQuery }) {
     return answerInlineQuery(results, { cache_time: 60 * 60 /* second */ })
 }
 
-fs.readdir('./components/puffy/', async (err, files) => {
+fs.readdir('./components/inline/puffy/', async (err, files) => {
     files = files.filter(x => x != '.DS_Store')
     files.forEach(file => {
         let name = file.replace('.jpg', '')
