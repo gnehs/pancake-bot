@@ -1,9 +1,12 @@
-const db = require('./db')
+const db = require('../db')
 const Composer = require('telegraf/composer')
-const telegram = require('./telegram')
+const telegram = require('../telegram')
 const fetch = require('node-fetch');
 const bot = new Composer()
-const subscribeIdList = require('../subscribeIdList')
+const subscribeIdList = require('../../subscribeIdList')
+
+require('./bahamut-anime')
+require('./github-release')
 bot.command('admin', async ctx => {
     if (await isAdmin(ctx))
         return ctx.reply('尼是管理員', { reply_to_message_id: ctx.message.message_id });
