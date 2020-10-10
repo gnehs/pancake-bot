@@ -7,6 +7,9 @@
 [![made-with-telegraf](https://img.shields.io/badge/Made%20with-Telegraf-1f425f.svg)](https://github.com/telegraf/telegraf)
 # 可愛鬆餅機器人 
 
+## 請注意！
+inline 功能由於 API 限制需要於 `config.js` 填寫分流用聊天室（開幾個頻道或群組給機器人發垃圾啦）
+
 ## Usage
 
 ```sh
