@@ -1,7 +1,5 @@
-const db = require('../components/db')
-const Composer = require('telegraf/composer')
-const telegram = require('../components/telegram')
-const bot = new Composer()
+const db = require('../db')
+const telegram = require('../telegram')
 const cron = require('node-cron');
 const fetch = require('node-fetch');
 cron.schedule('1,31 * * * *', () => {
@@ -74,4 +72,3 @@ async function sendData() {
         }
     }
 }
-module.exports = bot

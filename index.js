@@ -7,13 +7,11 @@ bot.use(commandParts());
 
 // components
 bot.use(
-    require('./subscribe/bahamut-anime'),
-    require('./subscribe/github-release'),
     require('./components/simple-reply'),
     require('./components/dayoff'),
-    require('./components/subscribe'),
     require('./components/help'),
-    require(`./components/inline/index`)
+    require(`./components/inline/index`),
+    require('./components/subscribe/index')
 );
 
 
