@@ -4,7 +4,7 @@ const telegram = require('../components/telegram')
 const bot = new Composer()
 const cron = require('node-cron');
 const fetch = require('node-fetch');
-cron.schedule('*/10 * * * *', () => {
+cron.schedule('1,31 * * * *', () => {
     sendData()
 });
 async function fetchData() {
