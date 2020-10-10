@@ -1,6 +1,6 @@
 
 const Composer = require('telegraf/composer')
-const telegram = require('./telegram')
+const telegram = require('../telegram')
 const inlineProcessorList = [
     {
         name: '海綿寶寶圖片搜尋器',

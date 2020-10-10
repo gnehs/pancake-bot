@@ -13,7 +13,7 @@ bot.use(
     require('./components/dayoff'),
     require('./components/subscribe'),
     require('./components/help'),
-    require(`./components/inlineProcessor`)
+    require(`./components/inline/index`)
 );
 
 
