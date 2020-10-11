@@ -5,11 +5,12 @@ const subscribeIdList = Object.entries(require('../list').subscribeIdList).map((
 bot.help(async ctx => {
     let { first_name } = await telegram.getMe()
     ctx.replyWithMarkdown(`*${first_name}的指令清單*
-/start - 開始
-/ping - PONG
+/about - 關於
 /date - 傳回伺服器的時間
 /dayoff - 台灣行政院人事局的停班課
+/ping - PONG
 /removekbd - 移除鍵盤
+/start - 開始
 
 *訂閱功能*
 /subscribe <訂閱編號> <可選參數> - 訂閱
