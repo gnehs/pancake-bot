@@ -3,7 +3,7 @@ const Composer = require('telegraf/composer')
 const telegram = require('../telegram')
 const fetch = require('node-fetch');
 const bot = new Composer()
-const subscribeIdList = require('../../subscribeIdList')
+const subscribeIdList = require('../../list').subscribeIdList
 
 require('./bahamut-anime')
 require('./github-release')

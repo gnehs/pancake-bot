@@ -1,7 +1,7 @@
 const Composer = require('telegraf/composer')
 const bot = new Composer()
 const telegram = require('./telegram')
-const subscribeIdList = Object.entries(require('../subscribeIdList')).map(([id, name]) => `${id} - ${name}\n`).join('')
+const subscribeIdList = Object.entries(require('../list').subscribeIdList).map(([id, name]) => `${id} - ${name}\n`).join('')
 bot.help(async ctx => {
     let { first_name } = await telegram.getMe()
     ctx.replyWithMarkdown(`*${first_name}的指令清單*
