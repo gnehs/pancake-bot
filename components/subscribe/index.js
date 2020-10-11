@@ -8,10 +8,7 @@ const subscribeIdList = require('../../list').subscribeIdList
 require('./bahamut-anime')
 require('./github-release')
 bot.command('admin', async ctx => {
-    if (await isAdmin(ctx))
-        return ctx.reply('尼是管理員', { reply_to_message_id: ctx.message.message_id });
-    else
-        return ctx.reply('尼不是管理員', { reply_to_message_id: ctx.message.message_id });
+    return ctx.reply(`尼${await isAdmin(ctx) ? '是' : '不是'}管理員`, { reply_to_message_id: ctx.message.message_id });
 });
 
 async function isAdmin(ctx) {
