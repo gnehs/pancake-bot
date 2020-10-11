@@ -10,6 +10,7 @@ bot.use(
     require('./components/simple-reply'),
     require('./components/dayoff'),
     require('./components/help'),
+    require('./components/start'),
     require(`./components/inline/index`),
     require('./components/subscribe/index')
 );

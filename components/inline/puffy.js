@@ -43,19 +43,10 @@ async function answer({ inlineQuery, answerInlineQuery }) {
     }
     await Promise.all(tasks)
     console.log(`[${'@' + inlineQuery.from.username || inlineQuery.from.first_name}][${text}] 處理完畢`)
-    if (!results.length) {
-        results.push({
-            type: 'article',
-            id: 'puffy_404',
-            title: '查無結果',
-            description: '沒有找到你想要的圖捏，試試其他關鍵字？',
-            thumb_url: 'https://i.loli.net/2020/10/11/vuoGq4PDaLYdfhT.jpg',
-            input_message_content: {
-                message_text: `蓬蓬小褲褲！`
-            }
-        })
-    }
-    return answerInlineQuery(results, { cache_time: 60 * 60 /* second */ })
+    return answerInlineQuery(results, Object.assign(
+        { cache_time: 60 * 60 /* second */ },
+        (!results.length ? { switch_pm_text: `❌ 找不到你要的圖片，按這裡查看可供搜尋的圖片名稱`, switch_pm_parameter: 'inline_puffy_404' } : {}))
+    )
 }
 
 fs.readdir('./components/inline/puffy/', async (err, files) => {

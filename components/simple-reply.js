@@ -2,17 +2,15 @@ const Composer = require('telegraf/composer')
 const bot = new Composer()
 const telegram = require('./telegram')
 
-bot.start(async ctx => {
-    let { first_name } = await telegram.getMe()
-    ctx.replyWithSticker('https://data.gnehs.net/stickers/hello.webp', { reply_to_message_id: ctx.message.message_id })
-    ctx.reply(`這裡是${first_name}！`, { reply_to_message_id: ctx.message.message_id })
-})
-
 bot.command('removekbd', ({ reply, replyWithSticker, message }) => {
     replyWithSticker('https://data.gnehs.net/stickers/bye.webp', { reply_to_message_id: message.message_id })
     reply(`鍵盤掰掰`, { reply_markup: JSON.stringify({ remove_keyboard: true }), reply_to_message_id: message.message_id })
 })
 bot.command('date', ({ reply, message }) => reply(`Server time: ${Date()}`, { reply_to_message_id: message.message_id }))
+bot.command('about', async ({ replyWithMarkdown, message }) => {
+    let { first_name } = await telegram.getMe()
+    replyWithMarkdown(`「${first_name}」由 [🥞pancake](https://github.com/gnehs/pancake-bot) 驅動！`, { reply_to_message_id: message.message_id })
+})
 
 // Ping
 bot.command('ping', ({ replyWithMarkdown, message }) => replyWithMarkdown(`*PONG*`, { reply_to_message_id: message.message_id }))
