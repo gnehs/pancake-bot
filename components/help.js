@@ -19,7 +19,7 @@ bot.help(async ctx => {
 *訂閱編號*
 ${subscribeIdList}
 *測試*
-/admin - 看看你是不是管理員
+/admin - 檢查是否具此聊天室的管理權限
 `, { reply_to_message_id: ctx.message.message_id })
 })
 module.exports = bot

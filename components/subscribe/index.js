@@ -8,7 +8,8 @@ const subscribeIdList = require('../../list').subscribeIdList
 require('./bahamut-anime')
 require('./github-release')
 bot.command('admin', async ctx => {
-    return ctx.reply(`尼${await isAdmin(ctx) ? '是' : '不是'}管理員`, { reply_to_message_id: ctx.message.message_id });
+    let isUserAdmin = await isAdmin(ctx)
+    return ctx.reply(`您${isUserAdmin ? '有' : '沒有'}此聊天室的管理權限，${isUserAdmin ? '可' : '不可'}於此操作訂閱與取消訂閱等功能。`, { reply_to_message_id: ctx.message.message_id });
 });
 
 async function isAdmin(ctx) {
