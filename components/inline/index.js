@@ -19,8 +19,6 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
         switch_pm_text: `📘 查看「${first_name}」行內機器人使用說明`,
         switch_pm_parameter: 'inline_help'
     })
-
-
 })
 
 module.exports = bot
