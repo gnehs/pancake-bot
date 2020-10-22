@@ -100,11 +100,24 @@ async function answer({ inlineQuery, answerInlineQuery }) {
             stickerRes = await sharp('./components/inline/sticker/img/leaf.png').composite([{ input: textRes, top: 262, left: 83 }]).webp().toBuffer()
             results.push({ type: 'sticker', id: 'leaf', sticker_file_id: (await stickerFileBuffertoId(stickerRes)) })
         }
+        async function genSuck() {
+            let attributes, options, textRes, stickerRes
+            attributes = { fill: 'black', stroke: 'white' };
+            options = { x: 0, y: 0, fontSize: 96, anchor: 'top', attributes, y: -18 };
+            textRes = await sharp(Buffer.from(svgNotoBold.getSVG(text, options)))
+                .resize(496 - 30, 112 - 6, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+                .extend({
+                    top: 3, bottom: 3, left: 15, right: 15, background: { r: 0, g: 0, b: 0, alpha: 0 }
+                })
+                .toBuffer()
+            stickerRes = await sharp('./components/inline/sticker/img/suck.webp').composite([{ input: textRes, top: 400, left: 0 }]).webp().toBuffer()
+            results.push({ type: 'sticker', id: 'suck', sticker_file_id: (await stickerFileBuffertoId(stickerRes)) })
+        }
         await Promise.all([
             genBlobbies(),
             genDono(),
             genDuck(),
-            genLeaf()
+            genSuck()
         ])
     } catch (e) {
         console.log(e)
