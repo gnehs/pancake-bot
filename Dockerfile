@@ -1,5 +1,6 @@
 FROM node:alpine
 
+RUN apk add g++ make python
 WORKDIR /app
 COPY . /app
 RUN echo {} >> database.json
