@@ -1,5 +1,3 @@
-
-const Composer = require('telegraf/composer')
 const telegram = require('../telegram')
 const sharp = require('sharp');
 const chats = require('../../config').chats;
