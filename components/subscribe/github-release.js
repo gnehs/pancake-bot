@@ -1,9 +1,9 @@
 const db = require('../db')
-const telegram = require('../telegram')
+const { sendMessage } = require('./manage')
 const cron = require('node-cron');
 const fetch = require('node-fetch');
 const dbKey = "github-release"
-cron.schedule('*/10 * * * *', () => {
+cron.schedule('* */1 * * *', () => {
     sendData()
 });
 function releaseId(repo, value) {
@@ -28,12 +28,12 @@ async function sendData() {
         if (repoReleases.message == 'Not Found') {
             let resp = ''
             resp += `找不到 <b>${repo}</b>，已自動取消訂閱\n`
-            for (chat of Object.keys(repoSubscribeList[repo])) {
-                telegram.sendMessage(chat, resp, {
-                    parse_mode: "html",
-                    disable_web_page_preview: true
-                })
-            }
+            sendMessage({
+                chats: repoSubscribeList[repo],
+                message: resp,
+                key: 'github-release',
+                value: repo
+            })
             function unsubscribe(value) {
                 let subscribe_list = repoSubscribeList
                 delete subscribe_list[value]
@@ -49,16 +49,12 @@ async function sendData() {
                 resp += `<b>${repo}</b> 已發布 <b>${latestRelease.name}</b>\n`
                 resp += `<b>更新日誌</b>：\n${latestRelease.body}`
                 resp += `\n<b>連結</b>：<a href="${latestRelease.html_url}">GitHub</a>`
-                for (chat of Object.keys(repoSubscribeList[repo])) {
-                    try {
-                        telegram.sendMessage(chat, resp, {
-                            parse_mode: "html",
-                            disable_web_page_preview: true
-                        })
-                    } catch (e) {
-
-                    }
-                }
+                sendMessage({
+                    chats: repoSubscribeList[repo],
+                    message: resp,
+                    key: 'github-release',
+                    value: repo
+                })
             }
         }
     }
