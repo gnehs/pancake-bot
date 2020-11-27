@@ -12,6 +12,7 @@ async function fetchData() {
     for ({ video_sn, title, info } of data.new_anime.date) {
         let episode = info.match(/\[(.+)\]/)[1]
         episode = episode.length >= 2 ? episode : `0${episode}`
+        episode = episode.replace(/\[|\]/g, '') // to fix 5] [特別篇
         newEpisode.push({
             id: video_sn,
             title,
