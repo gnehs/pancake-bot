@@ -1,5 +1,5 @@
 const db = require('../db')
-const telegram = require('../telegram')
+const { sendMessage } = require('./manage')
 const cron = require('node-cron');
 const fetch = require('node-fetch');
 cron.schedule('1,31 * * * *', () => {
@@ -64,15 +64,10 @@ async function sendData() {
                 resp += `<a href="${link}">${title}</a>\n`
             }
         }
-        for (chat of Object.keys(db.get('subscribe.baha'))) {
-            try {
-                telegram.sendMessage(chat, resp, {
-                    parse_mode: "html",
-                    disable_web_page_preview: true
-                })
-            } catch (e) {
-
-            }
-        }
+        sendMessage({
+            chats: Object.keys(db.get('subscribe.baha')),
+            message: resp,
+            key: 'baha'
+        })
     }
 }

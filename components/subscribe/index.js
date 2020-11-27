@@ -1,4 +1,4 @@
-const db = require('../db')
+const { subscribe, unsubscribe } = require('./manage')
 const Composer = require('telegraf/composer')
 const telegram = require('../telegram')
 const fetch = require('node-fetch');
@@ -22,30 +22,6 @@ async function isAdmin(ctx) {
     }
 }
 
-function subscribe(key, value, id) {
-    key = 'subscribe.' + key
-    let subscribe_list = db.get(key) || {}
-    if (value) {
-        if (!subscribe_list[value]) subscribe_list[value] = {}
-        subscribe_list[value][id] = true
-    } else {
-        subscribe_list[id] = value || true
-    }
-    db.set(key, subscribe_list);
-}
-function unsubscribe(key, value, id) {
-    key = 'subscribe.' + key
-    let subscribe_list = db.get(key) || {}
-    if (value) {
-        if (!subscribe_list[value]) subscribe_list[value] = {}
-        delete subscribe_list[value][id]
-        if (!subscribe_list[value].length)
-            delete subscribe_list[value]
-    } else {
-        delete subscribe_list[id]
-    }
-    db.set(key, subscribe_list);
-}
 
 bot.command('subscribe', async ctx => {
     if (await isAdmin(ctx)) {
