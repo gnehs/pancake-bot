@@ -2,7 +2,6 @@ const db = require('../db')
 const telegram = require('../telegram')
 const cron = require('node-cron');
 const fetch = require('node-fetch');
-const { catch } = require('telegraf/composer');
 cron.schedule('1,31 * * * *', () => {
     sendData()
 });
