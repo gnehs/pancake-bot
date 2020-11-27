@@ -2,6 +2,7 @@ const db = require('../db')
 const telegram = require('../telegram')
 const cron = require('node-cron');
 const fetch = require('node-fetch');
+const { catch } = require('telegraf/composer');
 cron.schedule('1,31 * * * *', () => {
     sendData()
 });
@@ -65,10 +66,14 @@ async function sendData() {
             }
         }
         for (chat of Object.keys(db.get('subscribe.baha'))) {
-            telegram.sendMessage(chat, resp, {
-                parse_mode: "html",
-                disable_web_page_preview: true
-            })
+            try {
+                telegram.sendMessage(chat, resp, {
+                    parse_mode: "html",
+                    disable_web_page_preview: true
+                })
+            } catch (e) {
+
+            }
         }
     }
 }

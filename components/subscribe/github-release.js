@@ -50,10 +50,14 @@ async function sendData() {
                 resp += `<b>更新日誌</b>：\n${latestRelease.body}`
                 resp += `\n<b>連結</b>：<a href="${latestRelease.html_url}">GitHub</a>`
                 for (chat of Object.keys(repoSubscribeList[repo])) {
-                    telegram.sendMessage(chat, resp, {
-                        parse_mode: "html",
-                        disable_web_page_preview: true
-                    })
+                    try {
+                        telegram.sendMessage(chat, resp, {
+                            parse_mode: "html",
+                            disable_web_page_preview: true
+                        })
+                    } catch (e) {
+
+                    }
                 }
             }
         }
