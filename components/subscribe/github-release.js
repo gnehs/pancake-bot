@@ -50,7 +50,7 @@ async function sendData() {
                 resp += `<b>更新日誌</b>：\n${latestRelease.body}`
                 resp += `\n<b>連結</b>：<a href="${latestRelease.html_url}">GitHub</a>`
                 sendMessage({
-                    chats: repoSubscribeList[repo],
+                    chats: Object.keys(repoSubscribeList[repo]),
                     message: resp,
                     key: 'github-release',
                     value: repo
