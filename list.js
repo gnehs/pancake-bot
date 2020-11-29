@@ -10,6 +10,11 @@ module.exports = {
             keywords: ['s', 'sticker', '貼'],
             js: './sticker.js'
         },
+        {
+            name: '隨機變音符號轉換器（A->Å）',
+            keywords: ['a', 'alphabet', '英'],
+            js: './alphabet.js'
+        },
     ],
     subscribeIdList: {
         'baha': '動畫瘋更新通知（無參數）',
