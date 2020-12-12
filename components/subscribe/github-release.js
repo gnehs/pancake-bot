@@ -42,7 +42,7 @@ async function sendData() {
             unsubscribe(repo)
         } else if (!repoReleases.message) {
             let latestRelease = repoReleases[0]
-            if (!localReleaseId || latestRelease.id > localReleaseId) {
+            if (!localReleaseId || latestRelease.id > localReleaseId && latestRelease.id) {
                 releaseId(repo, latestRelease.id)
                 // 發訊息
                 let resp = ''
