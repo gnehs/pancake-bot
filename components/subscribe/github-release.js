@@ -3,7 +3,7 @@ const { sendMessage } = require('./manage')
 const cron = require('node-cron');
 const fetch = require('node-fetch');
 const dbKey = "github-release"
-cron.schedule('* */1 * * *', () => {
+cron.schedule('1,31 * * * *', () => {
     sendData()
 });
 function releaseId(repo, value) {
