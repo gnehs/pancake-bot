@@ -25,9 +25,9 @@ async function sendData() {
     for (repo of repoList) {
         let localReleaseId = releaseId(repo)
         let repoReleases = await checkRepo(repo)
-        if (repoReleases.message == 'Not Found') {
+        if (repoReleases.message == 'Not Found' || !repoReleases.length) {
             let resp = ''
-            resp += `找不到 <b>${repo}</b>，已自動取消訂閱\n`
+            resp += `找不到 <b>${repo}</b>，或是該 Repo 無任何 Release，已自動取消訂閱\n`
             sendMessage({
                 chats: repoSubscribeList[repo],
                 message: resp,
