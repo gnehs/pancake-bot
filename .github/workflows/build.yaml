@@ -31,6 +31,8 @@ jobs:
         with:
           push: true
           tags: gnehs/pancake-bot:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
       -
