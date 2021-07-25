@@ -20,23 +20,23 @@
   "author": "gnehs <jayuiop@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
+    "cheerio": "^1.0.0-rc.10",
     "flexsearch": "^0.6.32",
-    "moment": "^2.26.0",
+    "moment": "^2.29.1",
     "node-cron": "^2.0.3",
     "sharp": "^0.25.4",
-    "simple-json-db": "^1.2.2",
-    "telegraf": "^3.34.0",
+    "simple-json-db": "^1.2.3",
+    "telegraf": "^3.39.0",
     "telegraf-command-parts": "^1.0.3",
     "text-to-svg": "^3.1.5"
   },
   "devDependencies": {
     "eslint": "^6.7.1",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-standard": "^4.1.0",
     "supervisor": "^0.12.0"
   }
 }
