@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:16-slim
 RUN apk add --no-cache g++ make
 # Install python/pip
 ENV PYTHONUNBUFFERED=1
