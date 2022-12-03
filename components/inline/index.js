@@ -5,12 +5,21 @@ const inlineProcessorList = require('../../list').inlineProcessorList
 const bot = new Composer()
 bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
     let text = inlineQuery.query.split(' ')
-    if (text.length > 1) {
-        for (let inlineProcessor of inlineProcessorList) {
-            if (inlineProcessor.keywords.includes(text[0])) {
-                return require(inlineProcessor.js)({ inlineQuery, answerInlineQuery })
+    try {
+
+        if (text.length > 1) {
+            for (let inlineProcessor of inlineProcessorList) {
+                if (inlineProcessor.keywords.includes(text[0])) {
+                    return require(inlineProcessor.js)({ inlineQuery, answerInlineQuery })
+                }
             }
         }
+        if (text[0]?.startsWith('http')) {
+            return require('./url')({ inlineQuery, answerInlineQuery })
+        }
+    } catch (e) {
+        console.log(e)
+        return answerInlineQuery([], { switch_pm_text: `❌ 出錯了，請稍後再試`, switch_pm_parameter: 'inline_404' })
     }
     // send help message
     let { first_name } = await telegram.getMe()
