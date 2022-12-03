@@ -2,13 +2,13 @@ async function answer({ inlineQuery, answerInlineQuery }) {
   let results = []
   // parse text
   let url = inlineQuery.query
+  let link = new URL(url);
   let isShorted = false
-  if (url.startsWith('https://24h.pchome.com.tw/')) {
+  if (link.host == `24h.pchome.com.tw`) {
     url = url.replace('https://24h.pchome.com.tw/', 'https://p.pancake.tw/')
     isShorted = true
   }
   if (url.match(/^https:\/\/twitter\.com\/(.+)/)) {
-    let link = new URL(url);
     link.search = '';
     link.hash = '';
     link.host = 'vxtwitter.com';
