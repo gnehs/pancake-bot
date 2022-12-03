@@ -1,6 +1,3 @@
-
-const Composer = require('telegraf/composer')
-const bot = new Composer()
 const db = require('../db')
 const telegram = require('../telegram')
 const fs = require('fs');
