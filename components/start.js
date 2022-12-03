@@ -14,11 +14,15 @@ bot.start(async ctx => {
                 { reply_to_message_id: ctx.message.message_id, disable_web_page_preview: true }
             )
             break;
+        case 'inline_error':
+            ctx.replyWithMarkdown(`*出錯原因*\n這可能是因為你輸入的指令有誤，或是機器人程式出錯，請檢查後再試一次。`, { reply_to_message_id: ctx.message.message_id })
+            break;
         case 'inline_help':
             ctx.replyWithMarkdown(`*📘「${first_name}」行內機器人使用說明*
 
 *👇 機器人可接受的格式如下：*
 @${username} \`<代號> <文字/關鍵字>\`
+@${username} \`<網址>\`
 
 *👇 可用的處理器清單：*
 ${parsedInlineProcessorList}`, { reply_to_message_id: ctx.message.message_id })

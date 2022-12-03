@@ -1,4 +1,3 @@
-
 const Composer = require('telegraf/composer')
 const telegram = require('../telegram')
 const inlineProcessorList = require('../../list').inlineProcessorList
@@ -19,7 +18,7 @@ bot.on('inline_query', async ({ inlineQuery, answerInlineQuery }) => {
         }
     } catch (e) {
         console.log(e)
-        return answerInlineQuery([], { switch_pm_text: `❌ 出錯了，請稍後再試`, switch_pm_parameter: 'inline_404' })
+        return answerInlineQuery([], { switch_pm_text: `❌ 出錯了，請稍後再試`, switch_pm_parameter: 'inline_error' })
     }
     // send help message
     let { first_name } = await telegram.getMe()
