@@ -3,10 +3,10 @@ const telegram = require('./telegram')
 const crypto = require('crypto')
 const bot = new Composer()
 const fetch = require('node-fetch');
-const sand = Math.random().toString(36).substring(2, 15)
+const salt = Math.random().toString(36).substring(2, 15)
 function encrypt(str) {
   const hash = crypto.createHash('sha256')
-  hash.update(str.toString() + sand, 'utf8')
+  hash.update(str.toString() + salt, 'utf8')
   return hash.digest('hex').slice(0, 8)
 }
 
