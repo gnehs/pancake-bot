@@ -24,7 +24,7 @@
     "flexsearch": "^0.6.32",
     "moment": "^2.29.1",
     "node-cron": "^2.0.3",
-    "sharp": "^0.25.4",
+    "sharp": "^0.30.5",
     "simple-json-db": "^1.2.3",
     "telegraf": "^3.39.0",
     "telegraf-command-parts": "^1.0.3",
