@@ -31,7 +31,7 @@ function search(text, limit = 100) {
 }
 async function answer({ inlineQuery, answerInlineQuery }) {
     let text = inlineQuery.query.split(' ')[1]
-    let searchResult = search(text, cacheFinished ? 100 : 4)
+    let searchResult = search(text, cacheFinished ? 12 : 4)
     let results = []
     let tasks = []
     async function parseImage(name, file) {
@@ -48,7 +48,7 @@ async function answer({ inlineQuery, answerInlineQuery }) {
         tasks.push(parseImage(name, file))
     }
     await Promise.all(tasks)
-    console.log(`[${inlineQuery.from.username ? '@' : ''}${(inlineQuery.from.username || inlineQuery.from.first_name)}][${text}] 處理完畢`)
+    console.log(`[${inlineQuery.from.username ? '@' : ''}${(inlineQuery.from.username || inlineQuery.from.first_name)}][${text}] 處理完畢 (${searchResult.length})`)
     return answerInlineQuery(results, Object.assign(
         { cache_time: 60 * 60 /* second */ },
         (!results.length ? { switch_pm_text: `❌ 找不到你要的圖片，按這裡查看可供搜尋的圖片名稱`, switch_pm_parameter: 'inline_puffy_404' } : {}))
