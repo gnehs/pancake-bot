@@ -11,6 +11,7 @@ bot.use(
     require('./components/dayoff'),
     require('./components/help'),
     require('./components/start'),
+    require('./components/gonokami'),
     require(`./components/inline/index`),
     require('./components/subscribe/index')
 );
