@@ -21,7 +21,7 @@ async function answer({ inlineQuery, answerInlineQuery }) {
     pushResult("25% 轉換", transformLetter(text, 0.25))
     pushResult("100% 通通轉換", transformLetter(text, 1))
 
-    console.log(`[${'@' + (inlineQuery.from.username || inlineQuery.from.first_name)}][letter][${text}] 處理完畢`)
+    console.log(`[${inlineQuery.from.username ? '@' : ''} + ${(inlineQuery.from.username || inlineQuery.from.first_name)}][letter][${text}]處理完畢`)
     return answerInlineQuery(results, { cache_time: 60 * 60 /* second */ })
 }
 function transformLetter(text, randomRate = 1) {
