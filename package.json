@@ -21,10 +21,9 @@
   "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
-    "flexsearch": "^0.6.32",
     "moment": "^2.29.1",
     "node-cron": "^2.0.3",
-    "sharp": "^0.25.4",
+    "sharp": "^0.31.2",
     "simple-json-db": "^1.2.3",
     "telegraf": "^3.39.0",
     "telegraf-command-parts": "^1.0.3",

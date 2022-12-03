@@ -4,12 +4,9 @@ const bot = new Composer()
 const db = require('../db')
 const telegram = require('../telegram')
 const fs = require('fs');
-const index = require("flexsearch").create({
-    encode: false,
-    tokenize: x => x.split("")
-});
 const chats = require('../../config').chats;
 const getRandomChat = () => chats[Math.floor(Math.random() * chats.length)]
+let puffyList = {}
 let cacheFinished = false
 async function imageFiletoId(file) {
     let cacheData = db.get('puffyCache') || {}
@@ -22,10 +19,22 @@ async function imageFiletoId(file) {
     db.set('puffyCache', cacheData);
     return photoId
 }
-
+function search(text, limit = 100) {
+    let letters = text.split('')
+    let result = Object.keys(puffyList).sort((a, b) => {
+        let aCount = 0
+        let bCount = 0
+        for (let letter of letters) {
+            if (a.includes(letter)) aCount++
+            if (b.includes(letter)) bCount++
+        }
+        return bCount - aCount
+    })
+    return result.slice(0, limit).map(x => puffyList[x])
+}
 async function answer({ inlineQuery, answerInlineQuery }) {
     let text = inlineQuery.query.split(' ')[1]
-    let searchResult = index.search(text, cacheFinished ? 100 : 4)
+    let searchResult = search(text, cacheFinished ? 100 : 4)
     let results = []
     let tasks = []
     async function parseImage(name, file) {
@@ -53,7 +62,7 @@ fs.readdir('./components/inline/puffy/', async (err, files) => {
     files = files.filter(x => x != '.DS_Store')
     files.forEach(file => {
         let name = file.replace('.jpg', '')
-        index.add(file, name);
+        puffyList[name] = file
     });
     // 移除已經不存在的圖片
     let cacheData = db.get('puffyCache') || {}
@@ -71,12 +80,12 @@ fs.readdir('./components/inline/puffy/', async (err, files) => {
     for (let file of files) {
         cacheData = db.get('puffyCache') || {}
         if (!cacheData[file]) {
-            console.log(`[${Object.keys(cacheData).length}/${files.length}]正在快取 ${file}`)
+            console.log(`[${Object.keys(cacheData).length} /${files.length}]正在快取 ${file}`)
             imageFiletoId(file)
             await delay(1200)
         }
     }
     cacheFinished = true
-    console.log(`${index.length} 張圖片快取完畢`);
+    console.log(`${Object.keys(puffyList).length} 張圖片快取完畢`);
 });
 module.exports = answer
