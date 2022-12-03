@@ -31,7 +31,7 @@ async function stickerFileBuffertoId(source) {
 async function answer({ inlineQuery, answerInlineQuery }) {
     let text = inlineQuery.query.split(' ')[1]
     if (cacheResult[text]) {
-        console.log(`[${inlineQuery.from.username || inlineQuery.from.first_name}][${text}] cached`)
+        console.log(`[${(inlineQuery.from.username || inlineQuery.from.first_name)}][${text}] cached`)
         return answerInlineQuery(cacheResult[text], { cache_time: 60 * 40 /* second */ })
     }
     if (text.length < 1) {
@@ -122,7 +122,7 @@ async function answer({ inlineQuery, answerInlineQuery }) {
         results.push({ type: 'sticker', id: 'tooManyRequests', sticker_file_id: tooManyRequests })
         return answerInlineQuery(results, { cache_time: 20 /* second */ })
     }
-    console.log(`[${'@' + inlineQuery.from.username || inlineQuery.from.first_name}][${text}] 處理完畢`)
+    console.log(`[${'@' + (inlineQuery.from.username || inlineQuery.from.first_name)}][${text}] 處理完畢`)
     cacheResult[text] = results
     return answerInlineQuery(results, { cache_time: 60 * 40 /* second */ })
 }
