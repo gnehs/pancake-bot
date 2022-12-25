@@ -16,7 +16,15 @@ async function imageFiletoId(file) {
     db.set('puffyCache', cacheData);
     return photoId
 }
-function search(text, limit = 100) {
+async function search(text, limit = 100) {
+    await new Promise(resolve => {
+        let length = Object.keys(puffyList).length
+        if (length == 0) {
+            setTimeout(resolve, 1000)
+        } else {
+            resolve()
+        }
+    })
     let letters = text.split('')
     let result = Object.keys(puffyList).sort((a, b) => {
         let aCount = 0
@@ -31,7 +39,7 @@ function search(text, limit = 100) {
 }
 async function answer({ inlineQuery, answerInlineQuery }) {
     let text = inlineQuery.query.split(' ')[1]
-    let searchResult = search(text, cacheFinished ? 12 : 4)
+    let searchResult = await search(text, cacheFinished ? 12 : 4)
     let results = []
     let tasks = []
     async function parseImage(name, file) {
