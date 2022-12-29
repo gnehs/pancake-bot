@@ -35,60 +35,64 @@ async function fetchPage(url) {
 }
 
 async function sendData() {
-  // get subscribe list
-  let subscribeList = db.get('subscribe.gonokamitw') || {}
-  let sentHashs = db.get('gonokamitw-sent') || []
+  try {
+    // get subscribe list
+    let subscribeList = db.get('subscribe.gonokamitw') || {}
+    let sentHashs = db.get('gonokamitw-sent') || []
 
-  let $ = await fetchPage('https://mbasic.facebook.com/gonokamitw')
-  const itemLinks = $('a')
-    .toArray()
-    // text = 完整動態
-    .filter((a) => $(a).text() === '完整動態')
-    .map((a) => $(a).attr('href'))
+    let $ = await fetchPage('https://mbasic.facebook.com/gonokamitw')
+    const itemLinks = $('a')
+      .toArray()
+      // text = 完整動態
+      .filter((a) => $(a).text() === '完整動態')
+      .map((a) => $(a).attr('href'))
 
-  // fetch first item
-  $ = await fetchPage(`https://mbasic.facebook.com${itemLinks[0]}`)
-  const $content = $(`#m_story_permalink_view > div > div > div > div > div`).eq(0);
-  const $attach = $(`#m_story_permalink_view > div > div > div.bx > div.cf.cg > div.ch > div.ci`)
-  const content = $($content.html().replace(/<br>/g, '\n')).text()
-  const link = `https://www.facebook.com${itemLinks[0]}`
-  const postHash = getHash(content)
-  if (sentHashs.includes(postHash)) {
-    return
-  }
-  sentHashs.push(postHash)
-  sentHashs = sentHashs.slice(-10)
-  db.set('gonokamitw-sent', sentHashs)
+    // fetch first item
+    $ = await fetchPage(`https://mbasic.facebook.com${itemLinks[0]}`)
+    const $content = $(`#m_story_permalink_view > div > div > div > div > div`).eq(0);
+    const $attach = $(`#m_story_permalink_view > div > div > div.bx > div.cf.cg > div.ch > div.ci`)
+    const content = $($content.html().replace(/<br>/g, '\n')).text()
+    const link = `https://www.facebook.com${itemLinks[0]}`
+    const postHash = getHash(content)
+    if (sentHashs.includes(postHash)) {
+      return
+    }
+    sentHashs.push(postHash)
+    sentHashs = sentHashs.slice(-10)
+    db.set('gonokamitw-sent', sentHashs)
 
-  const imageLinks = $attach.find('a')
-    .toArray()
-    .map((a) => $(a).attr('href'))
-    .filter((a) => a && a.includes(`/gonokamitw/photos/`) && a.includes(`encrypted_tracking_data`))
-  if (imageLinks.length) {
-    let imgs = await Promise.all(imageLinks.map(async (link) => {
-      const $ = await fetchPage('https://mbasic.facebook.com' + link)
-      const href = $('#MPhotoContent div.desc.attachment > span > div > span > a[target=_blank].sec').attr('href');
-      return href
-    }))
-    imgs = imgs.map((href, i) => {
-      let result = { 'type': 'photo', 'media': href }
-      if (i == 0) {
-        result.caption = `#五之神限定\n${content}`
-        result.parse_mode = 'html'
-      }
-      return result
-    })
+    const imageLinks = $attach.find('a')
+      .toArray()
+      .map((a) => $(a).attr('href'))
+      .filter((a) => a && a.includes(`/gonokamitw/photos/`) && a.includes(`encrypted_tracking_data`))
+    if (imageLinks.length) {
+      let imgs = await Promise.all(imageLinks.map(async (link) => {
+        const $ = await fetchPage('https://mbasic.facebook.com' + link)
+        const href = $('#MPhotoContent div.desc.attachment > span > div > span > a[target=_blank].sec').attr('href');
+        return href
+      }))
+      imgs = imgs.map((href, i) => {
+        let result = { 'type': 'photo', 'media': href }
+        if (i == 0) {
+          result.caption = `#五之神限定\n${content}`
+          result.parse_mode = 'html'
+        }
+        return result
+      })
 
-    sendMessage({
-      chats: Object.keys(subscribeList),
-      imgs,
-      key: dbKey
-    })
-  } else {
-    sendMessage({
-      chats: Object.keys(subscribeList),
-      text: `#五之神限定\n${content}`,
-      key: dbKey
-    })
+      sendMessage({
+        chats: Object.keys(subscribeList),
+        imgs,
+        key: dbKey
+      })
+    } else {
+      sendMessage({
+        chats: Object.keys(subscribeList),
+        text: `#五之神限定\n${content}`,
+        key: dbKey
+      })
+    }
+  } catch (e) {
+    console.log(e)
   }
 }
