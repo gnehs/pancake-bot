@@ -20,7 +20,7 @@
   "author": "gnehs <jayuiop@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.10",
+    "cheerio": "^1.0.0-rc.12",
     "moment": "^2.29.1",
     "node-cron": "^2.0.3",
     "sharp": "^0.31.2",
