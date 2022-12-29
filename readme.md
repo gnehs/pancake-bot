@@ -3,9 +3,10 @@
 [![GitHub issues](https://img.shields.io/github/issues/gnehs/pancake-bot)](https://github.com/gnehs/pancake-bot/issues)
 [![GitHub forks](https://img.shields.io/github/forks/gnehs/pancake-bot)](https://github.com/gnehs/pancake-bot/network)
 [![GitHub stars](https://img.shields.io/github/stars/gnehs/pancake-bot)](https://github.com/gnehs/pancake-bot/stargazers)
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/gnehs/pancake-bot)](https://hub.docker.com/repository/docker/gnehs/pancake-bot)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/gnehs/pancake-bot/build.yaml)
 [![made-with-telegraf](https://img.shields.io/badge/Made%20with-Telegraf-1f425f.svg)](https://github.com/telegraf/telegraf)
-# 可愛鬆餅機器人 
+[![Flat](https://gnehs.github.io/made-with-pancake-badge/flat.svg)](https://pancake.tw)
+# 可愛鬆餅機器人
 
 ## 請注意！
 inline 功能由於 API 限制需要於 `config.js` 填寫分流用聊天室（開幾個頻道或群組給機器人發垃圾啦）
