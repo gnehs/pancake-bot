@@ -51,9 +51,18 @@ async function sendData() {
     $ = await fetchPage(`https://mbasic.facebook.com${itemLinks[0]}`)
     const $content = $(`#m_story_permalink_view > div > div > div > div > div`).eq(0);
     const $attach = $(`#m_story_permalink_view > div > div > div.bx > div.cf.cg > div.ch > div.ci`)
-    const content = $($content.html().replace(/<br>/g, '\n')).text()
+    const content = $(
+      $content
+        .html()
+        .replace(/<br>|<\/p>/g, '\n')
+        .replace(/<p>/g, '')
+    )
+      .text()
+      .split('\n')
+      .map(t => t.trim())
+      .join('\n')
     const link = `https://www.facebook.com${itemLinks[0]}`
-    const postHash = getHash(content)
+    const postHash = getHash($content.text())
     if (sentHashs.includes(postHash)) {
       return
     }
@@ -61,24 +70,30 @@ async function sendData() {
     sentHashs = sentHashs.slice(-10)
     db.set('gonokamitw-sent', sentHashs)
 
+    if (!content.includes('各位拉麵與沾麵的愛好捧油!!') && !content.includes('五之神有夠神')) return
+    const name = content.match(/本週的限定【五之神 (.+?)】/)[1]
+
+    const message = `#五之神限定 #${name}\n${content}`
+
     const imageLinks = $attach.find('a')
       .toArray()
       .map((a) => $(a).attr('href'))
       .filter((a) => a && a.includes(`/gonokamitw/photos/`) && a.includes(`encrypted_tracking_data`))
+
     if (imageLinks.length) {
-      let imgs = await Promise.all(imageLinks.map(async (link) => {
+      let imgs = (await Promise.all(imageLinks.map(async (link) => {
         const $ = await fetchPage('https://mbasic.facebook.com' + link)
         const href = $('#MPhotoContent div.desc.attachment > span > div > span > a[target=_blank].sec').attr('href');
         return href
-      }))
-      imgs = imgs.map((href, i) => {
-        let result = { 'type': 'photo', 'media': href }
-        if (i == 0) {
-          result.caption = `#五之神限定\n${content}`
-          result.parse_mode = 'html'
-        }
-        return result
-      })
+      })))
+        .map((href, i) => {
+          let result = { 'type': 'photo', 'media': href }
+          if (i == 0) {
+            result.caption = message
+            result.parse_mode = 'html'
+          }
+          return result
+        })
 
       sendMessage({
         chats: Object.keys(subscribeList),
@@ -88,7 +103,7 @@ async function sendData() {
     } else {
       sendMessage({
         chats: Object.keys(subscribeList),
-        text: `#五之神限定\n${content}`,
+        text: message,
         key: dbKey
       })
     }
