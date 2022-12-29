@@ -3,8 +3,9 @@ const telegram = require('./telegram')
 const crypto = require('crypto')
 const bot = new Composer()
 const fetch = require('node-fetch');
-const salt = Math.random().toString(36).substring(2, 15)
-function encrypt(str) {
+const os = require('os')
+const salt = os.hostname() || 'salt'
+function hash(str) {
   const hash = crypto.createHash('sha256')
   hash.update(str.toString() + salt, 'utf8')
   return hash.digest('hex').slice(0, 8)
@@ -32,7 +33,7 @@ bot.command('vote', async ctx => {
       reply_to_message_id: ctx.message.message_id,
       reply_markup: {
         inline_keyboard: [
-          [{ text: '✖️停止投票', callback_data: `stopvote_${encrypt(ctx.message.from.id)}` }]
+          [{ text: '✖️停止投票', callback_data: `stopvote_${hash(ctx.message.from.id)}` }]
         ]
       }
     }
@@ -40,7 +41,7 @@ bot.command('vote', async ctx => {
 })
 bot.action(/stopvote_(.+)/, async ctx => {
   let hash = ctx.match[1]
-  if (hash == encrypt(ctx.update.callback_query.from.id)) {
+  if (hash == hash(ctx.update.callback_query.from.id)) {
     let poll = await telegram.stopPoll(ctx.update.callback_query.message.chat.id, ctx.update.callback_query.message.message_id)
     let count = poll.options.slice(0, -1).reduce((acc, cur) => acc + (cur.voter_count * cur.text.replace('+', '')), 0)
     ctx.replyWithMarkdown(`*${poll.question}投票結果*\n共 ${count} 人`, { reply_to_message_id: ctx.update.callback_query.message.message_id })
