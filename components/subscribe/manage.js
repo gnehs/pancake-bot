@@ -27,16 +27,24 @@ function unsubscribe(key, value, id) {
 	db.set(key, subscribe_list);
 }
 
-async function sendMessage({ chats, message, key, value }) {
+async function sendMessage({ chats, message, imgs = [], key, value }) {
 	console.log(`[Notify][${key}${value ? `#${value}` : ''}] Sending messages to:`)
 	console.log(chats)
 	for (chat of chats) {
 		try {
-			await telegram.sendMessage(chat, message, {
-				parse_mode: "html",
-				disable_web_page_preview: true
-			})
+			if (imgs.length) {
+				await telegram.sendMediaGroup(chat, imgs, {
+					parse_mode: "html",
+					disable_web_page_preview: true
+				})
+			} else {
+				await telegram.sendMessage(chat, message, {
+					parse_mode: "html",
+					disable_web_page_preview: true
+				})
+			}
 		} catch (e) {
+			console.log(e)
 			unsubscribe(key, value, chat)
 		}
 	}
