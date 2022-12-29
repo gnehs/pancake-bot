@@ -40,8 +40,8 @@ bot.command('vote', async ctx => {
   )
 })
 bot.action(/stopvote_(.+)/, async ctx => {
-  let hash = ctx.match[1]
-  if (hash == hash(ctx.update.callback_query.from.id)) {
+  let hashStr = ctx.match[1]
+  if (hashStr == hash(ctx.update.callback_query.from.id)) {
     let poll = await telegram.stopPoll(ctx.update.callback_query.message.chat.id, ctx.update.callback_query.message.message_id)
     let count = poll.options.slice(0, -1).reduce((acc, cur) => acc + (cur.voter_count * cur.text.replace('+', '')), 0)
     ctx.replyWithMarkdown(`*${poll.question}投票結果*\n共 ${count} 人`, { reply_to_message_id: ctx.update.callback_query.message.message_id })
