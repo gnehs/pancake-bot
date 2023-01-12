@@ -92,7 +92,7 @@ async function sendData() {
     db.set('gonokamitw-sent', sentHashs)
 
     if (!content.includes('各位拉麵與沾麵的愛好捧油!!') && !content.includes('五之神有夠神')) return
-    const name = content.match(/本週的限定【(.+?)】/)[1].replace(/ /g, '_')
+    const name = content.match(/本週的限定【(.+?)】/)[1].replace(/ |\!/g, '_')
 
     const message = `#五之神限定 #${name}\n${content}`
 
