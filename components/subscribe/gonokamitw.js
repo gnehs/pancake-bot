@@ -5,12 +5,13 @@ const fetch = require('node-fetch');
 const dbKey = "gonokamitw"
 const cheerio = require('cheerio')
 const crypto = require('crypto')
+let cookie = ``
 function getHash(str) {
   const hash = crypto.createHash('sha256')
   hash.update(str.toString(), 'utf8')
   return hash.digest('hex').slice(0, 8)
 }
-cron.schedule('*/15 * * * *', () => {
+cron.schedule('*/15 * * * 4,5', () => {
   let subscribeList = db.get('subscribe.gonokamitw') || {}
   if (Object.keys(subscribeList).length)
     sendData()
@@ -28,9 +29,29 @@ async function fetchPage(url) {
       "sec-fetch-mode": "navigate",
       "sec-fetch-site": "none",
       "sec-fetch-user": "?1",
-      "upgrade-insecure-requests": "1"
+      "upgrade-insecure-requests": "1",
+      'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36',
+      cookie
     }
-  }).then(res => res.text())
+  })
+    .then(x => {
+      if (x.headers.raw()['set-cookie']) {
+        function parseCookies(response) {
+          const raw = response.headers.raw()['set-cookie'];
+          return raw.map((entry) => {
+            const parts = entry.split(';');
+            const cookiePart = parts[0];
+            return cookiePart;
+          }).join(';');
+        }
+        cookie = parseCookies(x)
+      }
+      return x
+    })
+    .then(res => res.text())
+  if (html.match(`請先登入`)) {
+    throw new Error('請先登入')
+  }
   return cheerio.load(html)
 }
 
