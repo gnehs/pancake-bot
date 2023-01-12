@@ -68,7 +68,8 @@ async function sendData() {
     const content = $(
       $content
         .html()
-        .replace(/<br>|<\/p>/g, '\n')
+        .replace(/<br>/g, '\n')
+        .replace(/<\/p>/g, '\n\n')
         .replace(/<p>/g, '')
     )
       .text()
