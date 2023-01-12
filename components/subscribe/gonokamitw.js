@@ -35,16 +35,9 @@ async function fetchPage(url) {
     }
   })
     .then(x => {
-      if (x.headers.raw()['set-cookie']) {
-        function parseCookies(response) {
-          const raw = response.headers.raw()['set-cookie'];
-          return raw.map((entry) => {
-            const parts = entry.split(';');
-            const cookiePart = parts[0];
-            return cookiePart;
-          }).join(';');
-        }
-        cookie = parseCookies(x)
+      let setCookie = x.headers.raw()['set-cookie']
+      if (setCookie) {
+        cookie = setCookie.map(entry => entry.split(';')[0]).join(';')
       }
       return x
     })
@@ -132,3 +125,4 @@ async function sendData() {
     console.log(e)
   }
 }
+sendData()
