@@ -2,7 +2,7 @@ const db = require('../db')
 const { sendMessage } = require('./manage')
 const cron = require('node-cron');
 const fetch = require('node-fetch');
-cron.schedule('1,31 * * * *', () => {
+cron.schedule('50 0,30 * * * *', () => {
   sendData()
 });
 async function fetchData() {
