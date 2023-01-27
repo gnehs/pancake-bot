@@ -18,7 +18,6 @@ module.exports = {
     ],
     subscribeIdList: {
         'baha': '動畫瘋更新通知（無參數）',
-        'gonokamitw': '五之神 Facebook 限定通知（無參數）',
         'github-release': 'GitHub 更新通知（參數：owner/repo）'
     }
 }
