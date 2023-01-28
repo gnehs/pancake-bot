@@ -2,6 +2,10 @@ const { Telegraf } = require('telegraf')
 const session = require('telegraf/session')
 const commandParts = require('telegraf-command-parts');
 const bot = new Telegraf(process.env.BOT_TOKEN)
+bot.catch((err, ctx) => {
+    console.log(`Ooops, encountered an error for ${ctx.updateType}`)
+    console.log(err)
+})
 bot.use(session())
 bot.use(commandParts());
 
