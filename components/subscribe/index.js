@@ -7,7 +7,6 @@ const subscribeIdList = require('../../list').subscribeIdList;
 
 require('./bahamut-anime')
 require('./github-release')
-require('./gonokamitw')
 bot.command('admin', async ctx => {
 	try {
 		let isUserAdmin = await isAdmin(ctx)
