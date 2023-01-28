@@ -24,24 +24,20 @@ bot.command('vote', async ctx => {
   let byeOptions = ['ㄅㄅ', 'ＱＱ', '🥞']
   let byeOption = args[1] ? args[1] : byeOptions[Math.floor(Math.random() * byeOptions.length)]
   let voteOptions = ['+1', '+2', '+4', byeOption]
-  try {
-    ctx.replyWithPoll(
-      voteTitle,
-      voteOptions,
-      {
-        allows_multiple_answers: true,
-        is_anonymous: false,
-        reply_to_message_id: ctx.message.message_id,
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: '✖️停止投票', callback_data: `stopvote_${hash(ctx.message.from.id)}` }]
-          ]
-        }
+  ctx.replyWithPoll(
+    voteTitle,
+    voteOptions,
+    {
+      allows_multiple_answers: true,
+      is_anonymous: false,
+      reply_to_message_id: ctx.message.message_id,
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '✖️停止投票', callback_data: `stopvote_${hash(ctx.message.from.id)}` }]
+        ]
       }
-    )
-  } catch (e) {
-    console.log(e)
-  }
+    }
+  )
 })
 bot.action(/stopvote_(.+)/, async ctx => {
   let hashStr = ctx.match[1]
