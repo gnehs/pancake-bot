@@ -3,13 +3,7 @@ const { sendMessage } = require('./manage')
 const cron = require('node-cron');
 const fetch = require('node-fetch');
 const dbKey = "gonokamitw"
-const crypto = require('crypto')
-function getHash(str) {
-  const hash = crypto.createHash('sha256')
-  hash.update(str.toString(), 'utf8')
-  return hash.digest('hex').slice(0, 8)
-}
-cron.schedule('*/15 * * * 4,5', () => {
+cron.schedule('*/5 * * * *', () => {
   let subscribeList = db.get('subscribe.gonokamitw') || {}
   if (Object.keys(subscribeList).length)
     sendData()
