@@ -6,7 +6,7 @@ cron.schedule('*/5 * * * *', () => {
   sendData()
 });
 async function sendData() {
-  //check new
+  // check new
   let data = await fetch('https://gnehs.github.io/apple-ncc-feed/').then(res => res.json())
   let sent = db.get('apple-ncc') || []
   let newData = data.filter(x => !sent.includes(x.new_id))
