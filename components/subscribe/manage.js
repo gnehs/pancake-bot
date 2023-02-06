@@ -1,7 +1,6 @@
 const db = require('../db')
 const telegram = require('../telegram')
 function subscribe(key, value, id) {
-	console.log(`[Subscribe][${key}${value ? `#${value}` : ''}]`, id)
 	key = 'subscribe.' + key
 	let subscribe_list = db.get(key) || {}
 	if (value) {
@@ -13,7 +12,6 @@ function subscribe(key, value, id) {
 	db.set(key, subscribe_list);
 }
 function unsubscribe(key, value, id) {
-	console.log(`[Unsubscribe][${key}${value ? `#${value}` : ''}]`, id)
 	key = 'subscribe.' + key
 	let subscribe_list = db.get(key) || {}
 	if (value) {
@@ -28,8 +26,7 @@ function unsubscribe(key, value, id) {
 }
 
 async function sendMessage({ chats, message, imgs = [], key, value }) {
-	console.log(`[Notify][${key}${value ? `#${value}` : ''}] Sending messages to:`)
-	console.log(chats)
+	console.log(`[Notify][${key}${value ? `#${value}` : ''}] Sending messages to:`, chats)
 	for (chat of chats) {
 		try {
 			if (imgs.length) {
