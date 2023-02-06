@@ -17,9 +17,9 @@ module.exports = {
         },
     ],
     subscribeIdList: {
-        'baha': '動畫瘋更新通知（無參數）',
-        'gonokamitw': '五之神 Facebook 限定通知（無參數）',
-        'apple-ncc': '蘋果最新 NCC 認證資訊（無參數）',
+        'baha': '動畫瘋更新通知',
+        'gonokamitw': '五之神 Facebook 限定通知',
+        'apple-ncc': '蘋果最新 NCC 認證資訊',
         'github-release': 'GitHub 更新通知（參數：owner/repo）'
     }
 }
