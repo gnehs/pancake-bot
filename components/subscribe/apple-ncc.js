@@ -19,9 +19,7 @@ async function sendData() {
       text += `驗證號碼：<pre>${item.new_id}</pre>\n`
       text += `產品型號：<pre>${item.model}</pre>\n`
       text += `審驗日期：${item.verifydate}\n`
-      if (item.files.some(x => x.name.includes('外觀照'))) {
-        text += `<a href="${item.files.find(x => x.name.includes('外觀照')).link}">外觀照</a>\n`
-      }
+      text += `<a href="https://gnehs.github.io/apple-ncc-feed/demo.html#${item.new_id}">🔗 詳細資料</a>\n`
       sendMessage({
         chats: Object.keys(db.get('subscribe.apple-ncc')),
         message: text,
