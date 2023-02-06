@@ -53,6 +53,7 @@ bot.command('subscribe', async ctx => {
 						}
 						subscribe(id, args[1] || null, chatId)
 						ctx.replyWithMarkdown(`🎉 已訂閱「${subscribeIdList[id]}」，使用 \`/unsubscribe ${id}${args[1] ? ' ' + args[1] : ''}\` 來取消訂閱。`, { reply_to_message_id: ctx.message.message_id })
+						console.log(`[Subscribe] ${ctx.from.username}(${ctx.from.id}) subscribe ${id} ${args[1] || ''} in ${ctx.chat.id}(${ctx.chat.title})`
 					}
 				}
 			} else {
@@ -77,6 +78,7 @@ bot.command('unsubscribe', async ctx => {
 						telegram.sendChatAction(ctx.chat.id, "typing");
 						unsubscribe(id, args[1] || null, chatId)
 						ctx.replyWithMarkdown(`👋 取消訂閱「${subscribeIdList[id]}」成功。`, { reply_to_message_id: ctx.message.message_id })
+						console.log(`[Unsubscribe] ${ctx.from.username}(${ctx.from.id}) unsubscribe ${id} ${args[1] || ''} in ${ctx.chat.id}(${ctx.chat.title})`)
 					}
 				}
 			} else {
