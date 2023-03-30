@@ -2,7 +2,7 @@ const Composer = require('telegraf/composer')
 const bot = new Composer()
 const fetch = require('node-fetch');
 bot.command('rate', async ctx => {
-  const match = ctx.state.command.args.toUpperCase().match(/([0-9.]+)([A-Z]{3})=([A-Z]{3})/);
+  const match = ctx.state.command.args.toUpperCase().match(/(\d+|\d+\.\d+)([A-Z]{1,4})=([A-Z]{1,4})/);
   if (!match) {
     return ctx.reply('請輸入正確格式，例如：`/rate 100USD=JPY`', { parse_mode: "markdown", reply_to_message_id: ctx.message.message_id })
   }
