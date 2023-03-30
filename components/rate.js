@@ -11,7 +11,7 @@ bot.command('rate', async ctx => {
   const resp = await fetch(`https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`)
   const { success, result } = await resp.json()
   if (!success || !result) {
-    return ctx.reply('查無此貨幣代碼', { parse_mode: "markdown", reply_to_message_id: ctx.message.message_id })
+    return ctx.reply('查無此貨幣代碼或轉換時發生錯誤', { parse_mode: "markdown", reply_to_message_id: ctx.message.message_id })
   }
   ctx.reply(`${amount} ${from} = ${result} ${to}`, { parse_mode: "markdown", reply_to_message_id: ctx.message.message_id })
 })
