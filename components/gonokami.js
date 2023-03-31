@@ -59,12 +59,12 @@ bot.command('vote_ramen', async ctx => {
   let byeOptions = ['ㄅㄅ', 'ＱＱ', '🥞']
   let byeOption = args[1] ? args[1] : byeOptions[Math.floor(Math.random() * byeOptions.length)]
   let voteOptions = [
-    '+1 | 限定單點',
-    '+2 | 限定單點',
-    '+1 | 限定加蛋',
-    '+2 | 限定加蛋',
-    '+1 | 限定超值',
-    '+2 | 限定超值',
+    '+1 | 🍜 單點',
+    '+2 | 🍜 單點',
+    '+1 | 🥚 加蛋',
+    '+2 | 🥚 加蛋',
+    '+1 | ✨ 超值',
+    '+2 | ✨ 超值',
     byeOption
   ]
   ctx.replyWithPoll(
@@ -98,7 +98,8 @@ bot.action(/stopramenvote_(.+)/, async ctx => {
     for (let key in result) {
       responseText += `${key}：${result[key]} 人\n`
     }
-    responseText += `共 ${count} 人`
+    responseText += `---\n`
+    responseText += `共 ${count} 人\n`
     ctx.replyWithMarkdown(responseText, { reply_to_message_id: ctx.update.callback_query.message.message_id })
   } else {
     ctx.answerCbQuery('✖️ 只有發起人才能停止投票')
