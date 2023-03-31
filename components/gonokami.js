@@ -54,7 +54,7 @@ bot.action(/stopvote_(.+)/, async ctx => {
 })
 
 // ramen vote
-bot.command('vote_ramen', async ctx => {
+bot.command('voteramen', async ctx => {
   let args = ctx.state.command.splitArgs
   let voteTitle = args[0] == '' ? '限定拉麵' : args[0]
   let byeOptions = ['ㄅㄅ', 'ＱＱ', '🥞']
