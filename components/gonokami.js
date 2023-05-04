@@ -151,6 +151,7 @@ function updatePollData(id, data) {
   poll = {
     ...poll,
     ...data,
+    update_time: Date.now()
   }
   delete poll.id
   delete poll.is_anonymous
