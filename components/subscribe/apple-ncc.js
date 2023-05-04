@@ -10,7 +10,7 @@ async function sendData() {
   let data = await fetch('https://gnehs.github.io/apple-ncc-feed/').then(res => res.json())
   let sent = db.get('apple-ncc') || []
   let newData = data.filter(x => !sent.includes(x.new_id))
-  db.set('apple-ncc', data.map(x => x.new_id))
+  db.set('apple-ncc', [...new Set([...sent, ...newData.map(x => x.new_id)])])
   // 送資料
   if (newData.length) {
     let text
