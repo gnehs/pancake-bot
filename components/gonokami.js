@@ -5,6 +5,8 @@ const bot = new Composer()
 const fetch = require('node-fetch');
 const os = require('os')
 const salt = os.hostname() || 'salt'
+const JSONdb = require('simple-json-db');
+const voteData = new JSONdb('./votes.json', { jsonSpaces: false })
 function hash(str) {
   const hash = crypto.createHash('sha256')
   hash.update(str.toString() + salt, 'utf8')
@@ -27,7 +29,7 @@ bot.command('vote', async ctx => {
   let byeOptions = ['ㄅㄅ', 'ＱＱ', '🥞']
   let byeOption = args[1] ? args[1] : byeOptions[Math.floor(Math.random() * byeOptions.length)]
   let voteOptions = ['+1', '+2', '+4', byeOption]
-  ctx.replyWithPoll(
+  let data = await ctx.replyWithPoll(
     voteTitle,
     voteOptions,
     {
@@ -41,6 +43,14 @@ bot.command('vote', async ctx => {
       }
     }
   )
+
+  updatePollData(data.poll.id, {
+    ...data.poll,
+    chat_id: ctx.chat.id,
+    chat_name: ctx.chat.title || ctx.chat.first_name,
+    chat_type: ctx.chat.type,
+    votes: {}
+  })
 })
 bot.action(/stopvote_(.+)/, async ctx => {
   let hashStr = ctx.match[1]
@@ -68,7 +78,7 @@ bot.command('voteramen', async ctx => {
     '+2 | ✨ 超值',
     byeOption
   ]
-  ctx.replyWithPoll(
+  let data = await ctx.replyWithPoll(
     voteTitle,
     voteOptions,
     {
@@ -82,7 +92,33 @@ bot.command('voteramen', async ctx => {
       }
     }
   )
+  updatePollData(data.poll.id, {
+    ...data.poll,
+    chat_id: ctx.chat.id,
+    chat_name: ctx.chat.title || ctx.chat.first_name,
+    chat_type: ctx.chat.type,
+    votes: {}
+  })
 })
+
+// watch user vote
+bot.on('poll_answer', async ctx => {
+  let pollAnswer = ctx.update.poll_answer
+  let users = voteData.get('users') || {}
+  let polls = voteData.get('polls') || {}
+  let poll = polls[pollAnswer.poll_id]
+  users[pollAnswer.user.id] = {
+    first_name: pollAnswer.user?.first_name,
+    username: pollAnswer.user?.username,
+  }
+  let options = pollAnswer.option_ids
+  poll.votes[pollAnswer.user.id] = options
+  polls[pollAnswer.poll_id] = poll
+  voteData.set('users', users)
+  voteData.set('polls', polls)
+  console.log(`[vote] ${pollAnswer.user?.first_name} voted ${options.length ? options : 'retract'} in poll ${poll.question}(${pollAnswer.poll_id}) at ${poll.chat_name}(${poll.chat_id})`)
+})
+
 bot.action(/stopramenvote_(.+)/, async ctx => {
   let hashStr = ctx.match[1]
   if (hashStr == hash(ctx.update.callback_query.from.id)) {
@@ -102,8 +138,26 @@ bot.action(/stopramenvote_(.+)/, async ctx => {
     responseText += `---\n`
     responseText += `共 ${count} 人\n`
     ctx.replyWithMarkdown(responseText, { reply_to_message_id: ctx.update.callback_query.message.message_id })
+
+    updatePollData(poll.id, poll)
   } else {
     ctx.answerCbQuery('✖️ 只有發起人才能停止投票')
   }
 })
+
+function updatePollData(id, data) {
+  let polls = voteData.get('polls') || {}
+  let poll = polls[id] || {}
+  poll = {
+    ...poll,
+    ...data,
+  }
+  delete poll.id
+  delete poll.is_anonymous
+  delete poll.type
+  delete poll.allows_multiple_answers
+
+  polls[id] = poll
+  voteData.set('polls', polls)
+}
 module.exports = bot
