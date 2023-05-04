@@ -104,18 +104,19 @@ bot.command('voteramen', async ctx => {
 // watch user vote
 bot.on('poll_answer', async ctx => {
   let pollAnswer = ctx.update.poll_answer
+  // update user
   let users = voteData.get('users') || {}
-  let polls = voteData.get('polls') || {}
-  let poll = polls[pollAnswer.poll_id]
   users[pollAnswer.user.id] = {
     first_name: pollAnswer.user?.first_name,
     username: pollAnswer.user?.username,
   }
+  voteData.set('users', users)
+  // update poll
+  let polls = voteData.get('polls') || {}
+  let poll = polls[pollAnswer.poll_id]
   let options = pollAnswer.option_ids
   poll.votes[pollAnswer.user.id] = options
-  polls[pollAnswer.poll_id] = poll
-  voteData.set('users', users)
-  voteData.set('polls', polls)
+  updatePollData(pollAnswer.poll_id, poll)
   console.log(`[vote] ${pollAnswer.user?.first_name} voted ${options.length ? options : 'retract'} in poll ${poll.question}(${pollAnswer.poll_id}) at ${poll.chat_name}(${poll.chat_id})`)
 })
 
