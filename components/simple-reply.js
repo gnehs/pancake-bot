@@ -28,7 +28,15 @@ bot.hears("喵", ({ replyWithMarkdown, message }) => replyWithMarkdown('`HTTP /3
 bot.hears("嗨", ({ replyWithSticker, message }) => replyWithSticker('https://data.gnehs.net/stickers/hello.webp', { reply_to_message_id: message.message_id }));
 
 bot.hears("晚安", ({ reply, message, replyWithSticker }) => {
-    replyWithSticker('https://data.gnehs.net/stickers/good%20night.webp', { reply_to_message_id: message.message_id })
+    if (message.from.username == 'seadog007') {
+        replyWithSticker('https://gcdnb.pbrd.co/images/ZLjQQi8gqHui.webp', { reply_to_message_id: message.message_id })
+    } else if (message.from.username == 'Vincent550102') {
+        replyWithSticker('https://gcdnb.pbrd.co/images/4UdVojF7Ss9F.webp', { reply_to_message_id: message.message_id })
+    } else if (Math.random() < 0.5) {
+        replyWithSticker('https://data.gnehs.net/stickers/good%20night.webp', { reply_to_message_id: message.message_id })
+    } else {
+        replyWithSticker('https://gcdnb.pbrd.co/images/ZLjQQi8gqHui.webp', { reply_to_message_id: message.message_id })
+    }
     if (message.from.username == 'seadog007') {
         reply(`笨豹豹，晚安`, { reply_to_message_id: message.message_id })
     } else {
