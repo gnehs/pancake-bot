@@ -80,4 +80,12 @@ bot.hears("晚安", ({ reply, message, replyWithSticker }) => {
   }
 });
 
+// get user info by id
+bot.command("getuserinfo", async ({ reply, message }) => {
+  let splitedCommand = message.text.split(" ");
+  splitedCommand.shift(); // remove first element
+  let id = splitedCommand.join(" ");
+  let user = await telegram.getChat(id);
+  reply(JSON.stringify(user), { reply_to_message_id: message.message_id });
+});
 module.exports = bot;
