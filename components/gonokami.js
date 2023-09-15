@@ -105,6 +105,10 @@ bot.command("voteramen", async (ctx) => {
       inline_keyboard: [
         [
           {
+            text: "🧮計算人數",
+            callback_data: `countremenvote`,
+          },
+          {
             text: "✖️停止投票",
             callback_data: `stopramenvote_${hash(ctx.message.from.id)}`,
           },
@@ -153,19 +157,7 @@ bot.action(/stopramenvote_(.+)/, async (ctx) => {
       ctx.update.callback_query.message.chat.id,
       ctx.update.callback_query.message.message_id
     );
-    let options = [
-      ...new Set(
-        poll.options.slice(0, -1).map((x) => x.text.split("|")[1].trim())
-      ),
-    ];
-    let result = {};
-    options.forEach((x) => (result[x] = 0));
-    poll.options.slice(0, -1).forEach((x) => {
-      let option = x.text.split("|")[1].trim();
-      result[option] +=
-        x.voter_count * x.text.replace("+", "").split("|")[0].trim();
-    });
-    let count = Object.values(result).reduce((acc, cur) => acc + cur, 0);
+    let { count, result } = parsePollResult(poll);
     let responseText = `*${poll.question}投票結果*\n`;
     for (let key in result) {
       responseText += `${key}：${result[key]} 人\n`;
@@ -181,7 +173,41 @@ bot.action(/stopramenvote_(.+)/, async (ctx) => {
     ctx.answerCbQuery("✖️ 只有發起人才能停止投票");
   }
 });
-
+bot.action(/countremenvote/, async (ctx) => {
+  let pollID = ctx.update.callback_query.message.poll.id;
+  let poll = voteData.get("polls")[pollID];
+  let count = Object.values(poll.votes)
+    .map((x) => {
+      let sum = 0;
+      x.forEach((y) => {
+        sum += (y % 2) + 1;
+      });
+      return sum;
+    })
+    .reduce((acc, cur) => acc + cur, 0);
+  ctx.answerCbQuery(`目前投票人數：${count} 人`, {
+    show_alert: true,
+  });
+});
+function parsePollResult(poll) {
+  let options = [
+    ...new Set(
+      poll.options.slice(0, -1).map((x) => x.text.split("|")[1].trim())
+    ),
+  ];
+  let result = {};
+  options.forEach((x) => (result[x] = 0));
+  poll.options.slice(0, -1).forEach((x) => {
+    let option = x.text.split("|")[1].trim();
+    result[option] +=
+      x.voter_count * x.text.replace("+", "").split("|")[0].trim();
+  });
+  let count = Object.values(result).reduce((acc, cur) => acc + cur, 0);
+  return {
+    count,
+    result,
+  };
+}
 function updatePollData(id, data) {
   let polls = voteData.get("polls") || {};
   let poll = polls[id] || {};
