@@ -17,7 +17,9 @@ bot.command("number", async (ctx) => {
   ctx.telegram.sendChatAction(ctx.chat.id, "typing");
   let res = await fetch(
     "https://dxc.tagfans.com/mighty?_field%5B%5D=*&%24gid=10265&%24description=anouncingNumbers"
-  ).then((x) => x.json());
+  )
+    .then((x) => x.json())
+    .then((x) => x.sort((a, b) => b.UpdDate - a.UpdDate));
   let currentNumber = JSON.parse(res[0].detail_json).selections["目前號碼"];
   let responseText = `目前五之神號碼為 *${currentNumber}*`;
   ctx.reply(responseText, {
