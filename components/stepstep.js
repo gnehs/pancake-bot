@@ -3,7 +3,9 @@ const bot = new Composer();
 const fetch = require("node-fetch");
 
 bot.command("stepstep", async ({ reply, message }) => {
-  const date = new Date();
+  const date = new Date(
+    new Date().toLocaleString("en", { timeZone: "Asia/Taipei" })
+  );
   let day = date.getDate();
   if (date.getHours() < 8) day = day - 1;
   const dateStr = [
