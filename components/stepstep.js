@@ -30,7 +30,12 @@ bot.command("stepstep", async ({ reply, message }) => {
   rank.forEach((item, index) => {
     let distance = item.distance.toFixed(2);
     let steps = item.steps.toLocaleString();
-    responseText += `<code>${index + 1}. </code>${item.user.name}\n`;
+    let name = item.user.name
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll("&", "&amp;");
+
+    responseText += `<code>${index + 1}. </code>${name}\n`;
     responseText += `<code>   ${distance} 公里 - ${steps} 步</code>\n`;
   });
 
