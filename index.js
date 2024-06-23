@@ -17,4 +17,4 @@ bot.use(
   require("./components/subscribe/index")
 );
 
-module.exports = bot;
+bot.launch();
