@@ -1,8 +1,8 @@
-const Composer = require("telegraf/composer");
+const { Composer } = require("telegraf");
 const bot = new Composer();
 const fetch = require("node-fetch");
 
-bot.command("stepstep", async ({ reply, message }) => {
+bot.command("stepstep", async (ctx) => {
   const date = new Date(
     new Date().toLocaleString("en", { timeZone: "Asia/Taipei" })
   );
@@ -39,9 +39,9 @@ bot.command("stepstep", async ({ reply, message }) => {
     responseText += `<code>   ${distance} 公里 - ${steps} 步</code>\n`;
   });
 
-  reply(responseText, {
-    reply_to_message_id: message.message_id,
-    parse_mode: "html",
+  await ctx.reply(responseText, {
+    reply_to_message_id: ctx.message.message_id,
+    parse_mode: "HTML",
   });
 });
 

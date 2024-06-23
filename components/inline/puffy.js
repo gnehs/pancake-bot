@@ -37,8 +37,8 @@ async function search(text, limit = 100) {
   });
   return result.slice(0, limit).map((x) => puffyList[x]);
 }
-async function answer({ inlineQuery, answerInlineQuery }) {
-  let text = inlineQuery.query.split(" ")[1];
+async function answer(ctx) {
+  let text = ctx.inlineQuery.query.split(" ")[1];
   let searchResult = await search(text, cacheFinished ? 12 : 4);
   let results = [];
   let tasks = [];
@@ -57,18 +57,20 @@ async function answer({ inlineQuery, answerInlineQuery }) {
   }
   await Promise.all(tasks);
   console.log(
-    `[${inlineQuery.from.username ? "@" : ""}${
-      inlineQuery.from.username || inlineQuery.from.first_name
+    `[${ctx.inlineQuery.from.username ? "@" : ""}${
+      ctx.inlineQuery.from.username || ctx.inlineQuery.from.first_name
     }][${text}] 處理完畢 (${searchResult.length})`
   );
-  return answerInlineQuery(
+  return ctx.answerInlineQuery(
     results,
     Object.assign(
       { cache_time: 60 * 60 /* second */ },
       !results.length
         ? {
-            switch_pm_text: `❌ 找不到你要的圖片，按這裡查看可供搜尋的圖片名稱`,
-            switch_pm_parameter: "inline_puffy_404",
+            button: {
+              text: `❌ 找不到你要的圖片，按這裡查看可供搜尋的圖片名稱`,
+              start_parameter: "inline_puffy_404",
+            },
           }
         : {}
     )

@@ -1,4 +1,4 @@
-const Composer = require("telegraf/composer");
+const { Composer } = require("telegraf");
 const telegram = require("./telegram");
 const crypto = require("crypto");
 const bot = new Composer();
@@ -30,8 +30,8 @@ bot.command("number", async (ctx) => {
 
 // vote
 bot.command("vote", async (ctx) => {
-  let args = ctx.state.command.splitArgs;
-  let voteTitle = args[0] == "" ? "限定拉麵" : args[0];
+  let args = ctx.message.text.split(" ").slice(1);
+  let voteTitle = args[0] ?? "限定拉麵";
   let byeOptions = ["ㄅㄅ", "ＱＱ", "🥞"];
   let byeOption = args[1]
     ? args[1]
@@ -74,7 +74,7 @@ bot.action(/stopvote_(.+)/, async (ctx) => {
         (acc, cur) => acc + cur.voter_count * cur.text.replace("+", ""),
         0
       );
-    ctx.replyWithMarkdown(`*${poll.question}投票結果*\n共 ${count} 人`, {
+    ctx.replyWithMarkdownV2(`*${poll.question}投票結果*\n共 ${count} 人`, {
       reply_to_message_id: ctx.update.callback_query.message.message_id,
     });
   } else {
@@ -84,12 +84,11 @@ bot.action(/stopvote_(.+)/, async (ctx) => {
 
 // ramen vote
 bot.command("voteramen", async (ctx) => {
-  let args = ctx.state.command.splitArgs;
-  let voteTitle = args[0] == "" ? "限定拉麵" : args[0];
+  let args = ctx.message.text.split(" ").slice(1);
+  let voteTitle = args[0] ?? "限定拉麵";
   let byeOptions = ["ㄅㄅ", "ＱＱ", "🥞"];
-  let byeOption = args[1]
-    ? args[1]
-    : byeOptions[Math.floor(Math.random() * byeOptions.length)];
+  let byeOption =
+    args[1] ?? byeOptions[Math.floor(Math.random() * byeOptions.length)];
   let voteOptions = [
     "+1 | 🍜 單點",
     "+2 | 🍜 單點",
@@ -166,7 +165,7 @@ bot.action(/stopramenvote_(.+)/, async (ctx) => {
     }
     responseText += `---\n`;
     responseText += `共 ${count} 人\n`;
-    ctx.replyWithMarkdown(responseText, {
+    ctx.replyWithMarkdownV2(responseText, {
       reply_to_message_id: ctx.update.callback_query.message.message_id,
     });
 
