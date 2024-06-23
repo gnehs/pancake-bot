@@ -35,20 +35,20 @@ async function stickerFileBuffertoId(source) {
   });
   return msg.sticker.file_id;
 }
-async function answer({ inlineQuery, answerInlineQuery }) {
-  let text = inlineQuery.query.split(" ")[1];
+async function answer(ctx) {
+  let text = ctx.inlineQuery.query.split(" ")[1];
   if (cacheResult[text]) {
     console.log(
       `[${
-        inlineQuery.from.username || inlineQuery.from.first_name
+        ctx.inlineQuery.from.username || ctx.inlineQuery.from.first_name
       }][${text}] cached`
     );
-    return answerInlineQuery(cacheResult[text], {
+    return ctx.answerInlineQuery(cacheResult[text], {
       cache_time: 60 * 40 /* second */,
     });
   }
   if (text.length < 1) {
-    return answerInlineQuery(
+    return ctx.answerInlineQuery(
       [{ type: "sticker", id: "plz", sticker_file_id: moretextplz }],
       { cache_time: 60 * 40 /* second */ }
     );
@@ -226,15 +226,15 @@ async function answer({ inlineQuery, answerInlineQuery }) {
       id: "tooManyRequests",
       sticker_file_id: tooManyRequests,
     });
-    return answerInlineQuery(results, { cache_time: 20 /* second */ });
+    return ctx.answerInlineQuery(results, { cache_time: 20 /* second */ });
   }
   console.log(
-    `[${inlineQuery.from.username ? "@" : ""}${
-      inlineQuery.from.username || inlineQuery.from.first_name
+    `[${ctx.inlineQuery.from.username ? "@" : ""}${
+      ctx.inlineQuery.from.username || ctx.inlineQuery.from.first_name
     }][${text}] 處理完畢`
   );
   cacheResult[text] = results;
-  return answerInlineQuery(results, { cache_time: 60 * 40 /* second */ });
+  return ctx.answerInlineQuery(results, { cache_time: 60 * 40 /* second */ });
 }
 
 start();

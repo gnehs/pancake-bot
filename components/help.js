@@ -1,4 +1,4 @@
-const Composer = require("telegraf/composer");
+const { Composer } = require("telegraf");
 const bot = new Composer();
 const telegram = require("./telegram");
 const subscribeIdList = Object.entries(require("../list").subscribeIdList)
@@ -6,7 +6,7 @@ const subscribeIdList = Object.entries(require("../list").subscribeIdList)
   .join("");
 bot.help(async (ctx) => {
   let { first_name } = await telegram.getMe();
-  ctx.replyWithMarkdown(
+  ctx.replyWithMarkdownV2(
     `*${first_name}的指令清單*
 /about - 關於
 /date - 傳回伺服器的時間

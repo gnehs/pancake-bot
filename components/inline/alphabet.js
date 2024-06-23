@@ -54,10 +54,10 @@ const letterList = {
 };
 const chooseRandomElementFromArray = (arr) =>
   arr[Math.floor(Math.random() * arr.length)];
-async function answer({ inlineQuery, answerInlineQuery }) {
+async function answer(ctx) {
   let results = [];
   // parse text
-  let text = inlineQuery.query.split(" ");
+  let text = ctx.inlineQuery.query.split(" ");
   text.shift(); // remove first element
   text = text.join(" ");
 
@@ -76,11 +76,11 @@ async function answer({ inlineQuery, answerInlineQuery }) {
   pushResult("100% 通通轉換", transformLetter(text, 1));
 
   console.log(
-    `[${inlineQuery.from.username ? "@" : ""} + ${
-      inlineQuery.from.username || inlineQuery.from.first_name
+    `[${ctx.inlineQuery.from.username ? "@" : ""} + ${
+      ctx.inlineQuery.from.username || ctx.inlineQuery.from.first_name
     }][letter][${text}]處理完畢`
   );
-  return answerInlineQuery(results, { cache_time: 60 * 60 /* second */ });
+  return ctx.answerInlineQuery(results, { cache_time: 60 * 60 /* second */ });
 }
 function transformLetter(text, randomRate = 1) {
   let result = "";

@@ -1,4 +1,4 @@
-const Composer = require("telegraf/composer");
+const { Composer } = require("telegraf");
 const bot = new Composer();
 const cheerio = require("cheerio");
 const fetch = require("node-fetch");

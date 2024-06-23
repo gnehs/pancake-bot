@@ -1,91 +1,110 @@
-const Composer = require("telegraf/composer");
+const { Composer } = require("telegraf");
 const bot = new Composer();
 const telegram = require("./telegram");
 
-bot.command("removekbd", ({ reply, replyWithSticker, message }) => {
-  replyWithSticker("https://data.gnehs.net/stickers/bye.webp", {
-    reply_to_message_id: message.message_id,
+bot.command("removekbd", (ctx) => {
+  ctx.replyWithSticker("https://data.gnehs.net/stickers/bye.webp", {
+    reply_to_message_id: ctx.message.message_id,
   });
-  reply(`鍵盤掰掰`, {
+  ctx.reply(`鍵盤掰掰`, {
     reply_markup: JSON.stringify({ remove_keyboard: true }),
-    reply_to_message_id: message.message_id,
+    reply_to_message_id: ctx.message.message_id,
   });
 });
-bot.command("date", ({ reply, message }) =>
-  reply(`Server time: ${Date()}`, { reply_to_message_id: message.message_id })
+bot.command("date", (ctx) =>
+  ctx.reply(`Server time: ${Date()}`, {
+    reply_to_message_id: ctx.message.message_id,
+  })
 );
-bot.command("about", async ({ replyWithMarkdown, message }) => {
+bot.command("about", async (ctx) => {
   let { first_name } = await telegram.getMe();
-  replyWithMarkdown(
+  ctx.replyWithMarkdownV2(
     `「${first_name}」由 [🥞pancake](https://github.com/gnehs/pancake-bot) 驅動！`,
-    { reply_to_message_id: message.message_id }
+    { reply_to_message_id: ctx.message.message_id }
   );
 });
 
 // Ping
-bot.command("ping", ({ replyWithMarkdown, message }) =>
-  replyWithMarkdown(`*PONG*`, { reply_to_message_id: message.message_id })
+bot.command("ping", (ctx) =>
+  ctx.replyWithMarkdownV2(`*PONG*`, {
+    reply_to_message_id: ctx.message.message_id,
+  })
 );
-bot.hears("ping", ({ replyWithMarkdown, message }) =>
-  replyWithMarkdown(`*PONG*`, { reply_to_message_id: message.message_id })
+bot.hears("ping", (ctx) =>
+  ctx.replyWithMarkdownV2(`*PONG*`, {
+    reply_to_message_id: ctx.message.message_id,
+  })
 );
 
 // 髒話偵測
-bot.hears("幹", ({ replyWithMarkdown }) => replyWithMarkdown("_QQ_"));
+bot.hears("幹", (ctx) => ctx.replyWithMarkdownV2("_QQ_"));
 
-bot.hears("怕", ({ reply, message }) =>
-  reply("嚇到吃手手", { reply_to_message_id: message.message_id })
+bot.hears("怕", (ctx) =>
+  ctx.reply("嚇到吃手手", { reply_to_message_id: ctx.message.message_id })
 );
 
-bot.hears("逼比", ({ reply, message }) =>
-  reply("蹦蹦", { reply_to_message_id: message.message_id })
+bot.hears("逼比", (ctx) =>
+  ctx.reply("蹦蹦", { reply_to_message_id: ctx.message.message_id })
 );
 
-bot.hears("喵", ({ replyWithMarkdown, message }) =>
-  replyWithMarkdown("`HTTP /3.0 200 OK.`", {
-    reply_to_message_id: message.message_id,
+bot.hears("喵", (ctx) =>
+  ctx.replyWithMarkdownV2("`HTTP /3.0 200 OK.`", {
+    reply_to_message_id: ctx.message.message_id,
   })
 );
 
-bot.hears("嗨", ({ replyWithSticker, message }) =>
-  replyWithSticker("https://data.gnehs.net/stickers/hello.webp", {
-    reply_to_message_id: message.message_id,
+bot.hears("嗨", (ctx) =>
+  ctx.replyWithSticker("https://data.gnehs.net/stickers/hello.webp", {
+    reply_to_message_id: ctx.message.message_id,
   })
 );
 
-bot.hears("晚安", ({ reply, message, replyWithSticker }) => {
-  if (message.from.username == "seadog007") {
-    replyWithSticker("https://gcdnb.pbrd.co/images/ZLjQQi8gqHui.webp", {
-      reply_to_message_id: message.message_id,
-    });
-  } else if (message.from.username == "Vincent550102") {
-    replyWithSticker("https://gcdnb.pbrd.co/images/4UdVojF7Ss9F.webp", {
-      reply_to_message_id: message.message_id,
-    });
+bot.hears("晚安", (ctx) => {
+  const extra = {
+    reply_to_message_id: ctx.message.message_id,
+  };
+  if (ctx.message.from.username == "seadog007") {
+    ctx.replyWithSticker(
+      "https://gcdnb.pbrd.co/images/ZLjQQi8gqHui.webp",
+      extra
+    );
+  } else if (ctx.message.from.username == "Vincent550102") {
+    ctx.replyWithSticker(
+      "https://gcdnb.pbrd.co/images/4UdVojF7Ss9F.webp",
+      extra
+    );
   } else if (Math.random() < 0.5) {
-    replyWithSticker("https://data.gnehs.net/stickers/good%20night.webp", {
-      reply_to_message_id: message.message_id,
-    });
+    ctx.replyWithSticker(
+      "https://data.gnehs.net/stickers/good%20night.webp",
+      extra
+    );
   } else {
-    replyWithSticker("https://gcdnb.pbrd.co/images/ZLjQQi8gqHui.webp", {
-      reply_to_message_id: message.message_id,
-    });
+    ctx.replyWithSticker(
+      "https://gcdnb.pbrd.co/images/ZLjQQi8gqHui.webp",
+      extra
+    );
   }
-  if (message.from.username == "seadog007") {
-    reply(`笨豹豹，晚安`, { reply_to_message_id: message.message_id });
+  if (ctx.message.from.username == "seadog007") {
+    ctx.reply(`笨豹豹，晚安`, extra);
   } else {
-    reply(`${message.from.first_name}，晚安❤️`, {
-      reply_to_message_id: message.message_id,
-    });
+    ctx.reply(`${ctx.message.from.first_name}，晚安❤️`, extra);
   }
 });
 
 // get user info by id
-bot.command("getuserinfo", async ({ reply, message }) => {
-  let splitedCommand = message.text.split(" ");
+bot.command("getuserinfo", async (ctx) => {
+  let splitedCommand = ctx.message.text.split(" ");
   splitedCommand.shift(); // remove first element
   let id = splitedCommand.join(" ");
+  if (!id) {
+    ctx.reply("❌ 請在後面加上使用者 ID", {
+      reply_to_message_id: ctx.message.message_id,
+    });
+    return;
+  }
   let user = await telegram.getChat(id);
-  reply(JSON.stringify(user), { reply_to_message_id: message.message_id });
+  ctx.reply(JSON.stringify(user), {
+    reply_to_message_id: ctx.message.message_id,
+  });
 });
 module.exports = bot;
