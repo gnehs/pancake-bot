@@ -116,16 +116,7 @@ bot.on(message("sticker"), (ctx) => {
     return;
   }
   let sticker = ctx.message.sticker;
-  let stickerInfo = {
-    file_id: sticker.file_id,
-    file_unique_id: sticker.file_unique_id,
-    width: sticker.width,
-    height: sticker.height,
-    is_animated: sticker.is_animated,
-    emoji: sticker.emoji,
-    set_name: sticker.set_name,
-  };
-  ctx.reply(`<pre>${JSON.stringify(stickerInfo, null, 2)}</pre>`, {
+  ctx.reply(`<pre>${JSON.stringify(sticker, null, 2)}</pre>`, {
     reply_to_message_id: ctx.message.message_id,
     parse_mode: "HTML",
   });
