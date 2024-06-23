@@ -4,9 +4,12 @@ const bot = new Composer();
 const telegram = require("./telegram");
 
 bot.command("removekbd", (ctx) => {
-  ctx.replyWithSticker("https://data.gnehs.net/stickers/bye.webp", {
-    reply_to_message_id: ctx.message.message_id,
-  });
+  ctx.replyWithSticker(
+    "CAACAgEAAxkBAAIJlmZ4AULu2paaf4qOqVJ4f3APqfoBAAKdAgACOPTgR1en_Fb8JDzgNQQ",
+    {
+      reply_to_message_id: ctx.message.message_id,
+    }
+  );
   ctx.reply(`鍵盤掰掰`, {
     reply_markup: JSON.stringify({ remove_keyboard: true }),
     reply_to_message_id: ctx.message.message_id,
@@ -55,9 +58,83 @@ bot.hears("喵", (ctx) =>
 );
 
 bot.hears("嗨", (ctx) =>
-  ctx.replyWithSticker("https://data.gnehs.net/stickers/hello.webp", {
-    reply_to_message_id: ctx.message.message_id,
-  })
+  ctx.replyWithSticker(
+    "CAACAgUAAxkBAAIJmGZ4AVRrCyLdCt5vI4aTB7cPYrP8AAJ8DgACgOxZVgNQJej4_BIkNQQ",
+    {
+      reply_to_message_id: ctx.message.message_id,
+    }
+  )
+);
+
+bot.hears("早安", (ctx) =>
+  ctx.replyWithSticker(
+    "CAACAgUAAxkBAAIJdmZ3_youpSxjm__7ga2LnxG3ESNPAAJzEgACETeQV1xbq7c7uVXGNQQ",
+    {
+      reply_to_message_id: ctx.message.message_id,
+    }
+  )
+);
+
+bot.hears(["容勾絲揪", "榮勾絲揪"], (ctx) =>
+  ctx.replyWithSticker(
+    "CAACAgUAAxkBAAIJiGZ4AAF7iriA0n-aQnYFuDrLVTNZ7gACfA4AAoDsWVYDUCXo-PwSJDUE",
+    {
+      reply_to_message_id: ctx.message.message_id,
+    }
+  )
+);
+
+bot.hears("❤️", (ctx) =>
+  ctx.replyWithSticker(
+    "CAACAgUAAxkBAAIJgGZ4AAEXZIeOW1aI0K5y2nStxPIAAZkAAosSAAL51blXAAFQ0ZANjhzaNQQ",
+    {
+      reply_to_message_id: ctx.message.message_id,
+    }
+  )
+);
+bot.hears("🥞", (ctx) =>
+  ctx.replyWithSticker(
+    "CAACAgUAAxkBAAIJgmZ4AAElMp9saRujXl79y1UXp_aO0AAC_g4AAtAFuVdJIvY5qe55ZTUE",
+    {
+      reply_to_message_id: ctx.message.message_id,
+    }
+  )
+);
+
+bot.hears("🍪", (ctx) =>
+  ctx.replyWithSticker(
+    "CAACAgUAAxkBAAIJhGZ4AAE3t5CFp00uwuJyhoB62LMjhwAC3AwAAszvuFcFVvEyvCXG-jUE",
+    {
+      reply_to_message_id: ctx.message.message_id,
+    }
+  )
+);
+
+bot.hears("🐰", (ctx) =>
+  ctx.replyWithSticker(
+    "CAACAgUAAxkBAAIJimZ4AAGNfrO8IPAUThRYmyPZYrThVgACjxAAAl-5WFZDCdsdEB9_7TUE",
+    {
+      reply_to_message_id: ctx.message.message_id,
+    }
+  )
+);
+
+bot.hears("🍉", (ctx) =>
+  ctx.replyWithSticker(
+    "CAACAgUAAxkBAAIJjGZ4AAGmd5w5V9ubdVwxTxcVQmmqAwACURAAAklkmFfHrPq-1h_M9jUE",
+    {
+      reply_to_message_id: ctx.message.message_id,
+    }
+  )
+);
+
+bot.hears("🍮", (ctx) =>
+  ctx.replyWithSticker(
+    "CAACAgUAAxkBAAIJjmZ4AAG8rk3AyK2Iveh5tA7L04CV6gACdhAAAiVoqVdHmGKi0FmWcDUE",
+    {
+      reply_to_message_id: ctx.message.message_id,
+    }
+  )
 );
 
 bot.hears("晚安", (ctx) => {
@@ -66,22 +143,22 @@ bot.hears("晚安", (ctx) => {
   };
   if (ctx.message.from.username == "seadog007") {
     ctx.replyWithSticker(
-      "https://gcdnb.pbrd.co/images/ZLjQQi8gqHui.webp",
+      "CAACAgUAAxkBAAIJkGZ4AAHqKDlns115TTRjphQPc4ZJkAACZAgAAjjQIVTLjvHNvbKjLTUE",
       extra
     );
   } else if (ctx.message.from.username == "Vincent550102") {
     ctx.replyWithSticker(
-      "https://gcdnb.pbrd.co/images/4UdVojF7Ss9F.webp",
+      "CAACAgEAAxkBAAIJlGZ4ASpSPzqcKmDHYaNPT3AHaMYxAAJFAgACR_HZRY-ZgVz18-Q3NQQ",
       extra
     );
   } else if (Math.random() < 0.5) {
     ctx.replyWithSticker(
-      "https://data.gnehs.net/stickers/good%20night.webp",
+      "CAACAgUAAxkBAAECFyZmd_7-NtyjFf0s-rZfoYgf1L5T-wACVg8AAugGWVZ2N1z2l3RnHjUE",
       extra
     );
   } else {
     ctx.replyWithSticker(
-      "https://gcdnb.pbrd.co/images/ZLjQQi8gqHui.webp",
+      "CAACAgUAAxkBAAIJkGZ4AAHqKDlns115TTRjphQPc4ZJkAACZAgAAjjQIVTLjvHNvbKjLTUE",
       extra
     );
   }
