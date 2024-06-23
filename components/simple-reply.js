@@ -1,4 +1,5 @@
 const { Composer } = require("telegraf");
+const { message } = require("telegraf/filters");
 const bot = new Composer();
 const telegram = require("./telegram");
 
@@ -105,6 +106,28 @@ bot.command("getuserinfo", async (ctx) => {
   let user = await telegram.getChat(id);
   ctx.reply(JSON.stringify(user), {
     reply_to_message_id: ctx.message.message_id,
+  });
+});
+
+// sticker info
+bot.on(message("sticker"), (ctx) => {
+  // is private
+  if (ctx.chat.type != "private") {
+    return;
+  }
+  let sticker = ctx.message.sticker;
+  let stickerInfo = {
+    file_id: sticker.file_id,
+    file_unique_id: sticker.file_unique_id,
+    width: sticker.width,
+    height: sticker.height,
+    is_animated: sticker.is_animated,
+    emoji: sticker.emoji,
+    set_name: sticker.set_name,
+  };
+  ctx.reply(`<pre>${JSON.stringify(stickerInfo, null, 2)}</pre>`, {
+    reply_to_message_id: ctx.message.message_id,
+    parse_mode: "HTML",
   });
 });
 module.exports = bot;
