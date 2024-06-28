@@ -163,7 +163,7 @@ bot.action(/stopramenvote_(.+)/, async (ctx) => {
     for (let key in result) {
       responseText += `${key}：${result[key]} 人\n`;
     }
-    responseText += `---\n`;
+    responseText += `———\n`;
     responseText += `共 ${count} 人\n`;
     ctx.replyWithMarkdownV2(responseText, {
       reply_to_message_id: ctx.update.callback_query.message.message_id,
