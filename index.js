@@ -17,4 +17,8 @@ bot.use(
   require("./components/subscribe/index")
 );
 
+bot.catch((err) => {
+  console.log("[error]", err);
+});
+
 bot.launch();
