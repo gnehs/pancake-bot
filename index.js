@@ -1,9 +1,5 @@
 const { Telegraf } = require("telegraf");
 const bot = new Telegraf(process.env.BOT_TOKEN);
-bot.catch((err, ctx) => {
-  console.log(`Ooops, encountered an error for ${ctx.updateType}`);
-  console.log(err);
-});
 
 // components
 bot.use(
@@ -17,8 +13,9 @@ bot.use(
   require("./components/subscribe/index")
 );
 
-bot.catch((err) => {
-  console.log("[error]", err);
-});
-
 bot.launch();
+
+// catch error
+process.on("unhandledRejection", (error) => {
+  console.error(error);
+});
