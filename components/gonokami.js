@@ -32,9 +32,14 @@ bot.command("number", async (ctx) => {
     let currentTime = new Date();
     const WEEKDAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
     let weekday = WEEKDAYS[currentTime.getDay()];
-    currentTime = `${currentTime.getFullYear()}-${
+    currentTime = `${currentTime.getFullYear()}-${String(
       currentTime.getMonth() + 1
-    }-${currentTime.getDate()} ${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`;
+    ).padStart(2, "0")}-${String(currentTime.getDate()).padStart(
+      2,
+      "0"
+    )} ${String(currentTime.getHours()).padStart(2, "0")}:${String(
+      currentTime.getMinutes()
+    ).padStart(2, "0")}:${String(currentTime.getSeconds()).padStart(2, "0")}`;
 
     const targetTime = await predictCallingTime(
       targetNumber,
