@@ -26,31 +26,44 @@ bot.command("number", async (ctx) => {
   const targetNumber = args[0];
 
   let currentNumber = JSON.parse(res[0].detail_json).selections["目前號碼"];
-  let responseText = `目前五之神號碼為 *${currentNumber}*`;
-  if (targetNumber) {
-    // parse currentTime to  "2025-01-05 12:14:00"
-    let currentTime = new Date();
-    const WEEKDAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-    let weekday = WEEKDAYS[currentTime.getDay()];
-    currentTime = `${currentTime.getFullYear()}-${String(
-      currentTime.getMonth() + 1
-    ).padStart(2, "0")}-${String(currentTime.getDate()).padStart(
-      2,
-      "0"
-    )} ${String(currentTime.getHours()).padStart(2, "0")}:${String(
-      currentTime.getMinutes()
-    ).padStart(2, "0")}:${String(currentTime.getSeconds()).padStart(2, "0")}`;
+  let responseText = `👀 目前五之神號碼為 *${currentNumber}*`;
+  if (
+    targetNumber &&
+    !isNaN(targetNumber) && // is number
+    Number.isInteger(Number(targetNumber)) && // 確保是整數
+    targetNumber >= 1001 &&
+    targetNumber <= 1200 && // 設定上限
+    String(targetNumber).length <= 4 // 確保長度不超過 4 位數
+  ) {
+    if (targetNumber > currentNumber) {
+      // parse currentTime to  "2025-01-05 12:14:00"
+      let currentTime = new Date();
+      const WEEKDAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+      let weekday = WEEKDAYS[currentTime.getDay()];
+      currentTime = `${currentTime.getFullYear()}-${String(
+        currentTime.getMonth() + 1
+      ).padStart(2, "0")}-${String(currentTime.getDate()).padStart(
+        2,
+        "0"
+      )} ${String(currentTime.getHours()).padStart(2, "0")}:${String(
+        currentTime.getMinutes()
+      ).padStart(2, "0")}:${String(currentTime.getSeconds()).padStart(2, "0")}`;
 
-    const targetTime = await predictCallingTime(
-      targetNumber,
-      currentNumber,
-      currentTime,
-      weekday
-    );
-    responseText += `\n✨ 預測叫號時間：\`${targetTime
-      .split(":")
-      .slice(0, 2)
-      .join(":")}\``;
+      const targetTime = await predictCallingTime(
+        targetNumber,
+        currentNumber,
+        currentTime,
+        weekday
+      );
+      responseText += `\n✨ 預測 ${targetNumber} 叫號時間：\`${targetTime
+        .split(":")
+        .slice(0, 2)
+        .join(":")}\``;
+    } else {
+      responseText += `\n✖️ 輸入的號碼牌已過號`;
+    }
+  } else if (targetNumber) {
+    responseText += `\n✖️ 請輸入有效的號碼（1001-1200）`;
   } else {
     responseText += `\n透過 \`/number <號碼牌號碼>\` 取得預測叫號時間`;
   }
