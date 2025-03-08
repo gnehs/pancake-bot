@@ -1,3 +1,4 @@
+const { predictCallingTime } = require("../gonokami-number-predict/predict");
 const { Composer } = require("telegraf");
 const telegram = require("./telegram");
 const crypto = require("crypto");
@@ -15,13 +16,39 @@ function hash(str) {
 
 bot.command("number", async (ctx) => {
   ctx.telegram.sendChatAction(ctx.chat.id, "typing");
+  let args = ctx.message.text.split(" ").slice(1);
   let res = await fetch(
     "https://dxc.tagfans.com/mighty?_field%5B%5D=*&%24gid=10265&%24description=anouncingNumbers"
   )
     .then((x) => x.json())
     .then((x) => x.sort((a, b) => b.UpdDate - a.UpdDate));
+
+  const targetNumber = args[0];
+
   let currentNumber = JSON.parse(res[0].detail_json).selections["目前號碼"];
   let responseText = `目前五之神號碼為 *${currentNumber}*`;
+  if (targetNumber) {
+    // parse currentTime to  "2025-01-05 12:14:00"
+    let currentTime = new Date();
+    const WEEKDAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+    let weekday = WEEKDAYS[currentTime.getDay()];
+    currentTime = `${currentTime.getFullYear()}-${
+      currentTime.getMonth() + 1
+    }-${currentTime.getDate()} ${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`;
+
+    const targetTime = await predictCallingTime(
+      targetNumber,
+      currentNumber,
+      currentTime,
+      weekday
+    );
+    responseText += `\n✨ 預測叫號時間：\`${targetTime
+      .split(":")
+      .slice(0, 2)
+      .join(":")}\``;
+  } else {
+    responseText += `\n透過 \`/number <號碼牌號碼>\` 取得預測叫號時間`;
+  }
   ctx.reply(responseText, {
     parse_mode: "markdown",
     reply_to_message_id: ctx.message.message_id,
