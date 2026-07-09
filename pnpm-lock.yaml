@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       cheerio:
-        specifier: ^1.0.0-rc.12
+        specifier: ^1.2.0
         version: 1.2.0
       grammy:
         specifier: ^1.44.0

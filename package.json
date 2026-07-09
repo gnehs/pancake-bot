@@ -23,7 +23,7 @@
   "author": "gnehs",
   "license": "MIT",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12",
+    "cheerio": "^1.2.0",
     "grammy": "^1.44.0",
     "node-cron": "^4.6.0",
     "takumi-js": "^2.0.2"
