@@ -3,9 +3,9 @@ import { readdir } from "node:fs/promises";
 import { basename, join } from "node:path";
 import { InputFile, type Api } from "grammy";
 import type { InlineQueryResult } from "grammy/types";
-import type { AppDatabase } from "../../db/database.js";
-import type { BotContext } from "../../types.js";
-import { puffyAssetsDir } from "../../utils/paths.js";
+import type { AppDatabase } from "../../db/database.ts";
+import type { BotContext } from "../../types.ts";
+import { puffyAssetsDir } from "../../utils/paths.ts";
 
 type PuffyOptions = {
   api: Api;
@@ -47,8 +47,10 @@ export class PuffyInlineProcessor {
   private entries = new Map<string, PuffyEntry>();
   private loaded = false;
   private preloadFinished = false;
+  private readonly options: PuffyOptions;
 
-  constructor(private readonly options: PuffyOptions) {
+  constructor(options: PuffyOptions) {
+    this.options = options;
     void this.loadFiles().then(() => {
       if (this.options.preload) {
         void this.preloadCache().catch((error) => console.error(error));

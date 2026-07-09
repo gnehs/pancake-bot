@@ -1,7 +1,7 @@
 import type { Bot } from "grammy";
-import { subscribeTopics } from "./subscribe/topics.js";
-import type { BotContext } from "../types.js";
-import { escapeHtml } from "../utils/html.js";
+import { subscribeTopics } from "./subscribe/topics.ts";
+import type { BotContext } from "../types.ts";
+import { escapeHtml } from "../utils/html.ts";
 
 function replyTo(ctx: BotContext) {
   return ctx.message

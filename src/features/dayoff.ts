@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 import type { Bot } from "grammy";
-import type { BotContext } from "../types.js";
+import type { BotContext } from "../types.ts";
 
 export type DayoffData = {
   typhoon: Array<{

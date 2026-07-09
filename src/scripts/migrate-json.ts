@@ -1,8 +1,8 @@
 import { resolve } from "node:path";
-import { loadConfig } from "../config.js";
-import { AppDatabase } from "../db/database.js";
-import { migrateLegacyJson } from "../db/legacy-json.js";
-import { projectRoot } from "../utils/paths.js";
+import { loadConfig } from "../config.ts";
+import { AppDatabase } from "../db/database.ts";
+import { migrateLegacyJson } from "../db/legacy-json.ts";
+import { projectRoot } from "../utils/paths.ts";
 
 function readArg(name: string, fallback: string): string {
   const index = process.argv.indexOf(name);

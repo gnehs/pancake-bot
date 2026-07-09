@@ -1,6 +1,6 @@
 import type { Bot } from "grammy";
-import type { BotContext } from "../types.js";
-import { escapeHtml } from "../utils/html.js";
+import type { BotContext } from "../types.ts";
+import { escapeHtml } from "../utils/html.ts";
 
 function replyTo(ctx: BotContext) {
   return ctx.message

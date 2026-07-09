@@ -5,9 +5,9 @@ import { InputFile, type Api } from "grammy";
 import type { InlineQueryResult } from "grammy/types";
 import { render } from "takumi-js";
 import { container, image, text as textNode } from "takumi-js/helpers";
-import type { AppDatabase } from "../../db/database.js";
-import type { BotContext } from "../../types.js";
-import { stickerFontDir, stickerImageDir } from "../../utils/paths.js";
+import type { AppDatabase } from "../../db/database.ts";
+import type { BotContext } from "../../types.ts";
+import { stickerFontDir, stickerImageDir } from "../../utils/paths.ts";
 
 type StickerOptions = {
   api: Api;
@@ -91,12 +91,14 @@ function userLabel(ctx: BotContext): string {
 export class StickerInlineProcessor {
   private readonly resultCache = new Map<string, InlineQueryResult[]>();
   private fixedStickerIds = new Map<string, Promise<string>>();
+  private readonly options: StickerOptions;
   private fontBytes: Promise<{
     notoBold: Uint8Array;
     huninn: Uint8Array;
   }>;
 
-  constructor(private readonly options: StickerOptions) {
+  constructor(options: StickerOptions) {
+    this.options = options;
     this.fontBytes = this.loadFonts();
   }
 

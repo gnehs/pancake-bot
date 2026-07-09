@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { projectRoot } from "./utils/paths.js";
+import { projectRoot } from "./utils/paths.ts";
 
 function parseChatIds(value: string | undefined): number[] {
   if (!value) return [];

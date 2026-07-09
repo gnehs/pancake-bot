@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { DatabaseSync } from "node:sqlite";
-import { runMigrations } from "./migrations.js";
+import { runMigrations } from "./migrations.ts";
 
 export type JsonValue =
   | null

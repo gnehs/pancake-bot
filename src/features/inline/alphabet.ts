@@ -1,5 +1,5 @@
 import type { InlineQueryResult } from "grammy/types";
-import type { BotContext } from "../../types.js";
+import type { BotContext } from "../../types.ts";
 
 const letterList: Record<string, string> = {
   A: "ÁÀĂẮẰẴẲÂẤẦẪẨǍÅǺÄǞÃȦǠĄĀẢȀȂẠẶẬḀȺ",

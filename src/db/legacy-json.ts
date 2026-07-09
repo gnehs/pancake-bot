@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-import type { AppDatabase, JsonValue } from "./database.js";
+import type { AppDatabase, JsonValue } from "./database.ts";
 
 type LegacyObject = Record<string, unknown>;
 

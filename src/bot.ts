@@ -1,14 +1,14 @@
 import { Bot, GrammyError, HttpError } from "grammy";
-import type { RuntimeConfig } from "./config.js";
-import { AppDatabase } from "./db/database.js";
-import { installBasicFeature } from "./features/basic.js";
-import { installDayoffFeature } from "./features/dayoff.js";
-import { installHelpFeature } from "./features/help.js";
-import { installInlineFeature } from "./features/inline/index.js";
-import { installStartFeature } from "./features/start.js";
-import { installStepstepFeature } from "./features/stepstep.js";
-import { installSubscribeFeature } from "./features/subscribe/index.js";
-import type { BotContext } from "./types.js";
+import type { RuntimeConfig } from "./config.ts";
+import { AppDatabase } from "./db/database.ts";
+import { installBasicFeature } from "./features/basic.ts";
+import { installDayoffFeature } from "./features/dayoff.ts";
+import { installHelpFeature } from "./features/help.ts";
+import { installInlineFeature } from "./features/inline/index.ts";
+import { installStartFeature } from "./features/start.ts";
+import { installStepstepFeature } from "./features/stepstep.ts";
+import { installSubscribeFeature } from "./features/subscribe/index.ts";
+import type { BotContext } from "./types.ts";
 
 export type AppServices = {
   database: AppDatabase;

@@ -1,8 +1,8 @@
 import cron from "node-cron";
 import type { Api } from "grammy";
-import type { AppDatabase } from "../../db/database.js";
-import { escapeHtml } from "../../utils/html.js";
-import { sendMessage } from "./manage.js";
+import type { AppDatabase } from "../../db/database.ts";
+import { escapeHtml } from "../../utils/html.ts";
+import { sendMessage } from "./manage.ts";
 
 type BahamutApiResponse = {
   new_anime: {

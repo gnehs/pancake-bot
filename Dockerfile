@@ -10,7 +10,7 @@ RUN pnpm install --frozen-lockfile
 COPY ./tsconfig.json ./
 COPY ./src ./src
 COPY ./components/inline ./components/inline
-RUN pnpm build
+RUN pnpm typecheck
 RUN pnpm prune --prod
 
 FROM node:26-bookworm-slim
@@ -23,7 +23,7 @@ ENV NODE_ENV=production
 RUN corepack enable
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/src ./src
 COPY --from=build /app/components/inline ./components/inline
 VOLUME ["/app/data"]
-CMD ["node", "dist/main.js"]
+CMD ["node", "src/main.ts"]

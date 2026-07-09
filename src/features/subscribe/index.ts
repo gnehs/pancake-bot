@@ -1,10 +1,10 @@
 import type { Bot } from "grammy";
 import type { ChatMemberAdministrator, ChatMemberOwner } from "grammy/types";
-import type { AppServices } from "../../bot.js";
-import type { BotContext } from "../../types.js";
-import { subscribeTopics } from "./topics.js";
-import { startBahamutAnimeNotifier } from "./bahamut-anime.js";
-import { subscribe, unsubscribe } from "./manage.js";
+import type { AppServices } from "../../bot.ts";
+import type { BotContext } from "../../types.ts";
+import { subscribeTopics } from "./topics.ts";
+import { startBahamutAnimeNotifier } from "./bahamut-anime.ts";
+import { subscribe, unsubscribe } from "./manage.ts";
 
 function replyTo(ctx: BotContext) {
   return ctx.message

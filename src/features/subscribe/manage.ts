@@ -1,5 +1,5 @@
 import type { Api } from "grammy";
-import type { AppDatabase } from "../../db/database.js";
+import type { AppDatabase } from "../../db/database.ts";
 
 export function subscribe(database: AppDatabase, key: string, chatId: number): void {
   database.subscribe(key, chatId);

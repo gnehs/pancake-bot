@@ -1,6 +1,6 @@
-import { createBot } from "./bot.js";
-import { loadConfig } from "./config.js";
-import { AppDatabase } from "./db/database.js";
+import { createBot } from "./bot.ts";
+import { loadConfig } from "./config.ts";
+import { AppDatabase } from "./db/database.ts";
 
 const config = loadConfig();
 const database = new AppDatabase(config.databasePath);

@@ -1,10 +1,10 @@
 import type { Bot } from "grammy";
-import type { AppServices } from "../../bot.js";
-import type { BotContext } from "../../types.js";
-import { answerAlphabetInlineQuery } from "./alphabet.js";
-import { inlineProcessors } from "./metadata.js";
-import { PuffyInlineProcessor } from "./puffy.js";
-import { StickerInlineProcessor } from "./sticker.js";
+import type { AppServices } from "../../bot.ts";
+import type { BotContext } from "../../types.ts";
+import { answerAlphabetInlineQuery } from "./alphabet.ts";
+import { inlineProcessors } from "./metadata.ts";
+import { PuffyInlineProcessor } from "./puffy.ts";
+import { StickerInlineProcessor } from "./sticker.ts";
 
 type InlineProcessor = {
   keywords: string[];

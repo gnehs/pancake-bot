@@ -8,12 +8,12 @@
     "url": "https://github.com/gnehs/pancake-bot",
     "type": "git"
   },
-  "main": "dist/main.js",
+  "main": "src/main.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsx watch src/main.ts",
-    "migrate:json": "pnpm run build && node dist/scripts/migrate-json.js",
-    "start": "node dist/main.js",
+    "build": "pnpm run typecheck",
+    "dev": "node --watch src/main.ts",
+    "migrate:json": "node src/scripts/migrate-json.ts",
+    "start": "node src/main.ts",
     "test": "pnpm run typecheck",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
@@ -30,7 +30,6 @@
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
-    "tsx": "^4.23.0",
     "typescript": "^7.0.2"
   }
 }
