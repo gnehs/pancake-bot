@@ -109,3 +109,4 @@ data/*.sqlite-shm
 data/*.sqlite-wal
 .DS_Store
 votes.json
+.pnpm-store
