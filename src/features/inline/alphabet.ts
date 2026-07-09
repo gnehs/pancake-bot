@@ -1,4 +1,7 @@
-const letterList = {
+import type { InlineQueryResult } from "grammy/types";
+import type { BotContext } from "../../types.js";
+
+const letterList: Record<string, string> = {
   A: "ÁÀĂẮẰẴẲÂẤẦẪẨǍÅǺÄǞÃȦǠĄĀẢȀȂẠẶẬḀȺ",
   a: "áàăắằẵẳâấầẫẩǎåǻäǟãȧǡąāảȁȃạặậḁⱥ",
   B: "ḂḄḆɃƁ",
@@ -52,49 +55,47 @@ const letterList = {
   Z: "ŹẐŽŻẒẔƵ",
   z: "źẑžżẓẕƶ",
 };
-const chooseRandomElementFromArray = (arr) =>
-  arr[Math.floor(Math.random() * arr.length)];
-async function answer(ctx) {
-  let results = [];
-  // parse text
-  let text = ctx.inlineQuery.query.split(" ");
-  text.shift(); // remove first element
-  text = text.join(" ");
 
-  let pushResult = (title, result) => {
-    results.push({
-      type: "article",
-      id: `Aa_${title}`,
-      title: title,
-      description: result,
-      input_message_content: {
-        message_text: result,
-      },
-    });
-  };
-  pushResult("25% 轉換", transformLetter(text, 0.25));
-  pushResult("100% 通通轉換", transformLetter(text, 1));
-
-  console.log(
-    `[${ctx.inlineQuery.from.username ? "@" : ""} + ${
-      ctx.inlineQuery.from.username || ctx.inlineQuery.from.first_name
-    }][letter][${text}]處理完畢`
-  );
-  return ctx.answerInlineQuery(results, { cache_time: 60 * 60 /* second */ });
+function chooseRandomElement(value: string): string {
+  return value[Math.floor(Math.random() * value.length)] ?? "";
 }
-function transformLetter(text, randomRate = 1) {
+
+function transformLetter(text: string, randomRate = 1): string {
   let result = "";
-  for (let letter of text) {
-    if (
-      Object.keys(letterList).includes(letter) &&
-      randomRate >= Math.random()
-    ) {
-      result += chooseRandomElementFromArray(letterList[letter]);
-    } else {
-      result += letter;
-    }
+  for (const letter of text) {
+    const candidates = letterList[letter];
+    result += candidates && randomRate >= Math.random()
+      ? chooseRandomElement(candidates)
+      : letter;
   }
   return result;
 }
 
-module.exports = answer;
+function article(title: string, result: string): InlineQueryResult {
+  return {
+    type: "article",
+    id: `Aa_${title}`,
+    title,
+    description: result,
+    input_message_content: {
+      message_text: result,
+    },
+  };
+}
+
+export async function answerAlphabetInlineQuery(ctx: BotContext): Promise<void> {
+  const parts = ctx.inlineQuery?.query.split(" ") ?? [];
+  parts.shift();
+  const text = parts.join(" ");
+  const results = [
+    article("25% 轉換", transformLetter(text, 0.25)),
+    article("100% 通通轉換", transformLetter(text, 1)),
+  ];
+
+  console.log(
+    `[${ctx.inlineQuery?.from.username ? "@" : ""}${
+      ctx.inlineQuery?.from.username ?? ctx.inlineQuery?.from.first_name ?? "unknown"
+    }][letter][${text}]處理完畢`,
+  );
+  await ctx.answerInlineQuery(results, { cache_time: 60 * 60 });
+}

@@ -1,15 +1,29 @@
-FROM node:20
+FROM node:26-bookworm-slim AS build
 
 ENV TZ=Asia/Taipei
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 WORKDIR /app
-COPY ./package.json ./
-COPY ./package-lock.json ./
-RUN npm install --production
-RUN echo {} >> database.json
+RUN corepack enable
+COPY ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./.npmrc ./
+RUN pnpm install --frozen-lockfile
+COPY ./tsconfig.json ./
+COPY ./src ./src
+COPY ./components/inline ./components/inline
+RUN pnpm build
+RUN pnpm prune --prod
+
+FROM node:26-bookworm-slim
+
+ENV TZ=Asia/Taipei
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+WORKDIR /app
 ENV NODE_ENV=production
-ENV BOT_TOKEN=1234:abcd
-COPY ./components/inline/puffy/ ./components/inline/puffy/
-COPY . .
-CMD ["npm", "start"]
+RUN corepack enable
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/components/inline ./components/inline
+VOLUME ["/app/data"]
+CMD ["node", "dist/main.js"]
