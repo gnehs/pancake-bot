@@ -21,6 +21,10 @@ type StickerTemplate = {
   font: "noto-bold" | "huninn";
   color: string;
   stroke?: string;
+  size: {
+    width: number;
+    height: number;
+  };
   box: {
     left: number;
     top: number;
@@ -37,6 +41,7 @@ const templates: StickerTemplate[] = [
     font: "noto-bold",
     color: "#bcbdc8",
     stroke: "white",
+    size: { width: 512, height: 319 },
     box: { left: 0, top: 10, width: 332, height: 136 },
     fontSize: 92,
   },
@@ -45,6 +50,7 @@ const templates: StickerTemplate[] = [
     baseFile: "duck.png",
     font: "huninn",
     color: "white",
+    size: { width: 512, height: 512 },
     box: { left: 0, top: 0, width: 512, height: 225 },
     fontSize: 110,
   },
@@ -53,6 +59,7 @@ const templates: StickerTemplate[] = [
     baseFile: "dono.webp",
     font: "huninn",
     color: "black",
+    size: { width: 512, height: 512 },
     box: { left: 0, top: 0, width: 512, height: 106 },
     fontSize: 74,
   },
@@ -61,6 +68,7 @@ const templates: StickerTemplate[] = [
     baseFile: "iknow.webp",
     font: "huninn",
     color: "black",
+    size: { width: 512, height: 512 },
     box: { left: 0, top: 0, width: 512, height: 106 },
     fontSize: 74,
   },
@@ -70,6 +78,7 @@ const templates: StickerTemplate[] = [
     font: "noto-bold",
     color: "black",
     stroke: "white",
+    size: { width: 496, height: 512 },
     box: { left: 0, top: 400, width: 496, height: 112 },
     fontSize: 76,
   },
@@ -229,8 +238,10 @@ export class StickerInlineProcessor {
         ],
       }),
       {
-        width: 512,
-        height: 512,
+        // Keep the output canvas aligned with the base asset. A square canvas
+        // would center non-square assets and shift their text boxes.
+        width: template.size.width,
+        height: template.size.height,
         format: "webp",
         fonts: [{ name: fontFamily, data: fontData, weight: 700 }],
         lang: "zh-Hant",
