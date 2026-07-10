@@ -9,7 +9,6 @@ COPY ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./.npmrc ./
 RUN pnpm install --frozen-lockfile
 COPY ./tsconfig.json ./
 COPY ./src ./src
-COPY ./components/inline ./components/inline
 RUN pnpm typecheck
 RUN pnpm prune --prod
 
@@ -20,9 +19,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 WORKDIR /app
 ENV NODE_ENV=production
+# Keep stable, large assets in their own layers and out of the build stage.
+COPY ./components/inline/puffy ./components/inline/puffy
+COPY ./components/inline/sticker ./components/inline/sticker
+COPY ./components/inline/inlinethumb.psd ./components/inline/inlinethumb.psd
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/src ./src
-COPY --from=build /app/components/inline ./components/inline
 VOLUME ["/app/data"]
 CMD ["node", "src/main.ts"]
