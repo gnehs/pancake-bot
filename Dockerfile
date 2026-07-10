@@ -4,7 +4,7 @@ ENV TZ=Asia/Taipei
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 WORKDIR /app
-RUN corepack enable
+RUN npm install --global pnpm@11.7.0
 COPY ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./.npmrc ./
 RUN pnpm install --frozen-lockfile
 COPY ./tsconfig.json ./
@@ -20,7 +20,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 WORKDIR /app
 ENV NODE_ENV=production
-RUN corepack enable
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/src ./src
